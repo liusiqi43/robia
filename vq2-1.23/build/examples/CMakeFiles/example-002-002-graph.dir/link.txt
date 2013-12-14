@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++0x -O3 -DNDEBUG    CMakeFiles/example-002-002-graph.dir/example-002-002-graph.cc.o  -o example-002-002-graph -rdynamic 

@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++0x -O3 -DNDEBUG    CMakeFiles/example-004-002-som.dir/example-004-002-som.cc.o  -o example-004-002-som -rdynamic 

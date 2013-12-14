@@ -1,0 +1,1 @@
+/usr/bin/c++    -std=c++0x -O3 -DNDEBUG    CMakeFiles/example-005-001-speed-som.dir/example-005-001-speed-som.cc.o  -o example-005-001-speed-som -rdynamic 

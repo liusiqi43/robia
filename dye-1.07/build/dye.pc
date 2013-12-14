@@ -1,0 +1,9 @@
+Name: dye
+Description: 
+Version: 1.07
+Requires: mirage
+Libs: -L/usr/lib64 
+Cflags: -I/usr/include/dye
+
+
+
