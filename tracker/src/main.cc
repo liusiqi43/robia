@@ -7,8 +7,8 @@ class TestParam {
         public:
             static double        reference;
             static double        colorIndex(void) {return reference;}
-            static double        tolerance(void)  {return .3;}
-            static unsigned char darkThreshold(void){return 50;}
+            static double        tolerance(void)  {return .2;}
+            static unsigned char darkThreshold(void){return 70;}
 };
 
 double TestParam::reference = 0;
