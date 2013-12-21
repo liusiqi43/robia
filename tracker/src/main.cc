@@ -3,6 +3,7 @@
 #include <vector>
 #include "filter.h"
 #include "dyeFilter.h"
+#include "backgroundFilter.h"
 
 using namespace std;
 
@@ -14,14 +15,15 @@ int main(int argc, char** argv)
     }
 
     cv::VideoCapture cap(-1); // open the default camera
-    cap.set(CV_CAP_PROP_FRAME_WIDTH, 1280); 
-    cap.set(CV_CAP_PROP_FRAME_HEIGHT, 720); 
+    cap.set(CV_CAP_PROP_FRAME_WIDTH, 800); 
+    cap.set(CV_CAP_PROP_FRAME_HEIGHT, 600); 
     if(!cap.isOpened())  // check if we succeeded
         return -1;
 
 
     vector<GR::ImageFilter*> filters;
     filters.push_back(new GR::DyeFilter(atof(argv[1])));
+    filters.push_back(new GR::BackgroundFilter());
 
     cv::Mat output;
     cv::namedWindow("color filtered",CV_WINDOW_NORMAL);
