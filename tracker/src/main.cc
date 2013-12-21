@@ -1,20 +1,10 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <vector>
+#include "filter.h"
 #include "dyeFilter.h"
 
-class TestParam {
-        public:
-            static double        reference;
-            static double        colorIndex(void) {return reference;}
-            static double        tolerance(void)  {return .2;}
-            static unsigned char darkThreshold(void){return 70;}
-};
-
-double TestParam::reference = 0;
-
-typedef dye::Test<TestParam, dye::cvBGR> Test;
-
+using namespace std;
 
 int main(int argc, char** argv)
 {
@@ -30,22 +20,25 @@ int main(int argc, char** argv)
         return -1;
 
 
-    TestParam::reference = atof(argv[1]);
-    dye::cvBGR ref;
-    
-    dye::bgrOf(TestParam::reference, ref);
+    vector<GR::ImageFilter*> filters;
+    filters.push_back(new GR::DyeFilter(atof(argv[1])));
 
-
-    cv::Mat display;
-    cv::namedWindow("frame",CV_WINDOW_NORMAL);
+    cv::Mat output;
+    cv::namedWindow("color filtered",CV_WINDOW_NORMAL);
     for(;;)
     {
-        cv::Mat frame;
-        cap >> frame; // get a new frame from camera
+        cv::Mat input;
+        cap >> input; // get a new frame from camera
 
-        dye::mask(frame, display, Test(), ref, dye::cvBGR(0,0,0));
-        
-        cv::imshow("frame", display);
+        for(vector<GR::ImageFilter*>::iterator it = filters.begin(); it != filters.end(); ++it) {
+            (*it)->process(input, output); 
+
+            if(it!=filters.end()){
+                input = output;
+            }
+        }
+
+        cv::imshow("color filtered", output);
 
         int c = 0;
         c = cvWaitKey( 30 );
@@ -55,7 +48,7 @@ int main(int argc, char** argv)
                     std::vector<int> compression_params;
                     compression_params.push_back(CV_IMWRITE_PNG_COMPRESSION);
                     compression_params.push_back(9);
-                    imwrite("test.png", display, compression_params);
+                    imwrite("test.png", output, compression_params);
                     break;
                 }
             case 27:

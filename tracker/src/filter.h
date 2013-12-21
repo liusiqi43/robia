@@ -1,6 +1,8 @@
+#pragma once
+
 #include <opencv2/opencv.hpp>
 
-namespace gesReg{
+namespace GR{
     class ImageFilter{
         private:
 

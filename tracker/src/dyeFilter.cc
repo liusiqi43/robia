@@ -2,12 +2,27 @@
 #include "dyeFilter.h"
 #include "dye.h"
 
-namespace gesReg{
+dye::DyeParams::DyeParams(double colorIndex, 
+        double tolerance, unsigned char darkThreshold)
+: darkThreshold(darkThreshold), tolerance(tolerance) 
+{
+    if(colorIndex <= 6 && colorIndex >= 0){
+        this->colorIndex = colorIndex;
+        dye::bgrOf(this->colorIndex, this->ref);
+    } else {
+        throw new GR::ColorIndexOutOfRange();
+    }
+}
 
+namespace GR{
 
-    void dyeFilter::process( const cv::Mat& src, cv::Mat& output ){
-        cv::resize(output, output, src.size());
+    DyeFilter::DyeFilter(double ref, double tolerance, 
+            unsigned char darkThreshold) 
+        :params(ref, tolerance, darkThreshold)
+    {
+    }
 
-        dye::index(src, output, DARK_RGB_COMPONENT);
+    void DyeFilter::process( const cv::Mat& src, cv::Mat& output ){
+        dye::mask(src, output, this->params, this->params.getRef(), dye::cvBGR(0,0,0));
     }
 }

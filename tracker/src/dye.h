@@ -17,6 +17,7 @@
 #define DARK_RGB_COMPONENT 50
 
 namespace dye {
+
     typedef cv::Vec3b cvBGR;
 
     /**
@@ -269,21 +270,29 @@ namespace dye {
      * PARAM::colorIndex() should return the color index of the
      * reference color (in [0,6]). Let us note i the index of the bgr pixel tested, the test returns true when |i-PARAM::colorIndex()| < PARAM::tolerance(). Last, PARAM::darkThreshold() returns the darkness threshold. Its type is the type of some bgr components.
      */
-    template<typename PARAM,typename BGR>
-        class Test {
-            public:
-                bool operator()(const BGR& val) const {
-                    BGR bgr;
-                    if(removeColor(val,bgr,PARAM::darkThreshold()))
-                        return false;
-                    return index_fit(PARAM::colorIndex(),indexOf(bgr[2],bgr[1],bgr[0]),PARAM::tolerance());
-                }
-        };
+    class DyeParams {
+        private:
+            double colorIndex;
+            double tolerance;
+            unsigned char darkThreshold;
+            cvBGR ref;
+        public:
+            DyeParams(double colorIndex, double tolerence, unsigned char darkThreshold);
 
-    template<typename TEST>
-    void mask(const cv::Mat& input,
+            inline bool test(const cvBGR& val) const {
+                cvBGR bgr;
+                if(removeColor(val,bgr,this->darkThreshold))
+                    return false;
+                return index_fit(this->colorIndex,dye::indexOf(bgr[2],bgr[1],bgr[0]), this->tolerance);
+            }
+
+            inline cvBGR getRef() {return this->ref;}
+    };
+
+
+    inline void mask(const cv::Mat& input,
             cv::Mat& output,
-            const TEST& test,
+            const DyeParams& params,
             cvBGR true_value,
             cvBGR false_value) 
     {
@@ -294,7 +303,7 @@ namespace dye {
             for(int j = 0; j < input.cols; j++)
             {
                 cvBGR bgr = input.at<cvBGR>(i,j);
-                output.at<cvBGR>(i,j) = test(bgr) ? true_value : false_value;
+                output.at<cvBGR>(i,j) = params.test(bgr) ? true_value : false_value;
             }
         }
     }

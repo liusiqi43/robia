@@ -1,24 +1,28 @@
+#pragma once
+
 #include <opencv2/opencv.hpp>
-#include "filter.h"
+#include <exception>
 #include "dye.h"
+#include "filter.h"
 
-namespace gesReg{
+// gesture recognition
+namespace GR{
 
-    class TestParam {
-        public:
-            static double        reference;
-            static double        colorIndex(void) {return reference;}
-            static double        tolerance(void)  {return .3;}
-            static unsigned char darkThreshold(void){return 50;}
+    class ColorIndexOutOfRange : public std::exception {
+        virtual const char* what() const throw(){
+            return "Color index out of range, [0..6]";
+        }
     };
 
 
-    typedef dye::Test<TestParam, dye::cvBGR> Test;
-
-
-    class dyeFilter: public ImageFilter {
+    class DyeFilter: public ImageFilter {
         private:
+            dye::DyeParams params;
+
         public:
-            void process(const cv::Mat&, cv::Mat&);
+            DyeFilter(double ref, 
+                    double tolerance=.3, 
+                    unsigned char darkThreshold=50); 
+            void process(const cv::Mat& in, cv::Mat& out);
     };
 }
