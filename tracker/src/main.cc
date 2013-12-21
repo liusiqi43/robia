@@ -22,15 +22,19 @@ int main(int argc, char** argv)
 
 
     vector<GR::ImageFilter*> filters;
-    filters.push_back(new GR::DyeFilter(atof(argv[1])));
-    filters.push_back(new GR::BackgroundFilter());
+    GR::BackgroundFilter *bgFilter = new GR::BackgroundFilter(5);
+    filters.push_back(new GR::DyeFilter(atof(argv[1]), 0.7, 20));
+    filters.push_back(bgFilter);
 
     cv::Mat output;
-    cv::namedWindow("color filtered",CV_WINDOW_NORMAL);
+    cv::namedWindow("motion/color filtered",CV_WINDOW_NORMAL);
+    cv::namedWindow("original",CV_WINDOW_NORMAL);
     for(;;)
     {
         cv::Mat input;
         cap >> input; // get a new frame from camera
+
+        cv::imshow("original", input);
 
         for(vector<GR::ImageFilter*>::iterator it = filters.begin(); it != filters.end(); ++it) {
             (*it)->process(input, output); 
@@ -55,6 +59,10 @@ int main(int argc, char** argv)
                 }
             case 27:
                 return 0;
+            case 'u':
+                {
+                    bgFilter->setUpdate(!bgFilter->getUpdate());
+                }
             default:
                 break;
         }

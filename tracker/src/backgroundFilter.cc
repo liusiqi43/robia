@@ -10,7 +10,15 @@
 #include <opencv/cv.h>
 #include <opencv2/video/background_segm.hpp>
 #include <vector>
+#include <queue>
 #include "backgroundFilter.h"
+
+bool largerThan (const std::vector<cv::Point>& contour1, const std::vector<cv::Point>& contour2)
+{
+    double area1 = fabs(contourArea(cv::Mat(contour1)));
+    double area2 = fabs(contourArea(cv::Mat(contour2)));
+	return area1 > area2;	
+}
 
 void GR::BackgroundFilter::refineSegments(const cv::Mat& img, cv::Mat& mask, cv::Mat& dst)
 {
@@ -34,29 +42,25 @@ void GR::BackgroundFilter::refineSegments(const cv::Mat& img, cv::Mat& mask, cv:
 
     // iterate through all the top-level contours,
     // draw each connected component with its own random color
-    int idx = 0, largestComp = 0;
-    double maxArea = 0;
 
-    for( ; idx >= 0; idx = hierarchy[idx][0] )
-    {
-        const std::vector<cv::Point>& c = contours[idx];
-        double area = fabs(contourArea(cv::Mat(c)));
-        if( area > maxArea )
-        {
-            maxArea = area;
-            largestComp = idx;
-        }
+    std::sort(contours.begin(), contours.end(), largerThan); 
+   
+    int count = 0;
+    cv::Scalar color(255, 255, 255);
+    while(count < this->m_iMaxContour && count < contours.size()){
+        cv::drawContours( dst, contours, count, color, CV_FILLED, 8, hierarchy );
+        ++count;
     }
-    cv::Scalar color( 0, 0, 255 );
-    cv::drawContours( dst, contours, largestComp, color, CV_FILLED, 8, hierarchy );
 }
 
-GR::BackgroundFilter::BackgroundFilter(bool update, int noise)
-    :noise(noise), m_bUpdateBgModel(update) {
+GR::BackgroundFilter::BackgroundFilter(int maxContour, bool update, int noise)
+    :noise(noise), m_bUpdateBgModel(update), m_iMaxContour(maxContour) {
         this->m_BgSubtractor.set("noiseSigma", this->noise);
     }
 
 void GR::BackgroundFilter::process(const cv::Mat& in, cv::Mat& out){
     this->m_BgSubtractor(in, this->m_aBgMask, this->m_bUpdateBgModel ? -1 : 0);
     refineSegments(in, this->m_aBgMask, out);
+
+    bitwise_and(in, out, out);
 }
