@@ -1,6 +1,0 @@
-Name: 
-Description: 
-Version: 1.23
-Requires: 
-Libs: -L/usr/lib64 
-Cflags: -I/usr/include/vq2 

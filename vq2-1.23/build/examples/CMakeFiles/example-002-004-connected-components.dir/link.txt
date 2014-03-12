@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++0x -O3 -DNDEBUG    CMakeFiles/example-002-004-connected-components.dir/example-002-004-connected-components.cc.o  -o example-002-004-connected-components -rdynamic 

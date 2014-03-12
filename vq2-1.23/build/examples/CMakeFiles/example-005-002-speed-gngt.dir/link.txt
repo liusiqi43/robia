@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++0x -O3 -DNDEBUG    CMakeFiles/example-005-002-speed-gngt.dir/example-005-002-speed-gngt.cc.o  -o example-005-002-speed-gngt -rdynamic 

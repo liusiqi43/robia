@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++0x -O3 -DNDEBUG    CMakeFiles/example-004-003-gngt.dir/example-004-003-gngt.cc.o  -o example-004-003-gngt -rdynamic 

@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++0x -O3 -DNDEBUG    CMakeFiles/example-test-002-lists.dir/example-test-002-lists.cc.o  -o example-test-002-lists -rdynamic 

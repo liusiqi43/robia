@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++0x -O3 -DNDEBUG    CMakeFiles/example-002-003-distance.dir/example-002-003-distance.cc.o  -o example-002-003-distance -rdynamic 
