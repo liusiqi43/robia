@@ -5,6 +5,8 @@ robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /home/siqi/Documents/robia/
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/src/ARDrone.h
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /opt/ros/hydro/include/XmlRpcDecl.h
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /opt/ros/hydro/include/XmlRpcValue.h
+robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /opt/ros/hydro/include/geometry_msgs/Twist.h
+robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /opt/ros/hydro/include/geometry_msgs/Vector3.h
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /opt/ros/hydro/include/ros/advertise_options.h
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /opt/ros/hydro/include/ros/advertise_service_options.h
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /opt/ros/hydro/include/ros/assert.h
