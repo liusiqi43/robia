@@ -1,0 +1,1 @@
+/usr/bin/c++   -O3 -DNDEBUG    -Wl,--no-as-needed   -L/home/siqi/Documents/robia/robia/vq2-1.33/build/src CMakeFiles/example-004-001-kmeans.dir/example-004-001-kmeans.cc.o  -o example-004-001-kmeans -rdynamic 

@@ -1,0 +1,1 @@
+/usr/bin/c++   -O3 -DNDEBUG    -Wl,--no-as-needed   -L/home/siqi/Documents/robia/robia/vq2-1.33/build/src CMakeFiles/example-005-002-speed-gngt.dir/example-005-002-speed-gngt.cc.o  -o example-005-002-speed-gngt -rdynamic 
