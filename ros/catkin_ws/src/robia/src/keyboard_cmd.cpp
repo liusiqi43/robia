@@ -1,11 +1,13 @@
-#include "ros/ros.h"
-#include "std_msgs/Empty.h"
-#include "ARDrone.h"
 #include <termios.h>
 
-static struct termios oldt, newt;
+#include "ros/ros.h"
+#include "std_msgs/Empty.h"
 
-void setNonBlockingGetChar() {
+#include "ARDrone.h"
+
+
+char nonBlockingGetCh() {
+    static struct termios oldt, newt;
     tcgetattr( STDIN_FILENO, &oldt);           // save old settings
     newt = oldt;
     newt.c_lflag &= ~ICANON;
@@ -13,13 +15,17 @@ void setNonBlockingGetChar() {
     newt.c_lflag &= ~ISIG;
     newt.c_cc[VMIN] = 0;
     newt.c_cc[VTIME] = 0;
-    tcsetattr( STDIN_FILENO, TCSANOW, &newt);  // apply new settings
-}
 
-int main(int argc, char **argv)
-{
+    tcsetattr( STDIN_FILENO, TCSANOW, &newt);  // apply new settings
+    char c = getchar();
+    tcsetattr( STDIN_FILENO, TCSANOW, &oldt);  // apply new settings
+
+    return c;
+  }
+
+  int main(int argc, char **argv)
+  {
     ros::init(argc, argv, "keyboard_cmd");
-    setNonBlockingGetChar();
 
     ros::NodeHandle n;
 
@@ -29,7 +35,7 @@ int main(int argc, char **argv)
 
     while (ros::ok())
     {
-      char c = getchar();
+      char c = nonBlockingGetCh();
 
       switch(c) {
         case 't' : {
@@ -86,8 +92,6 @@ int main(int argc, char **argv)
   }
 
   delete drone;
-
-  tcsetattr( STDIN_FILENO, TCSANOW, &oldt);  // restore old settings
 
   return 0;
 }
