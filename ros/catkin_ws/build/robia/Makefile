@@ -35,14 +35,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/siqi/Documents/robia/robia/ros/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/drone/Documents/robia/ros/catkin_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/siqi/Documents/robia/robia/ros/catkin_ws/build
+CMAKE_BINARY_DIR = /home/drone/Documents/robia/ros/catkin_ws/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -120,14 +117,14 @@ test/fast: test
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/siqi/Documents/robia/robia/ros/catkin_ws/build/CMakeFiles /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia/CMakeFiles/progress.marks
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/siqi/Documents/robia/robia/ros/catkin_ws/build/CMakeFiles 0
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/drone/Documents/robia/ros/catkin_ws/build/CMakeFiles /home/drone/Documents/robia/ros/catkin_ws/build/robia/CMakeFiles/progress.marks
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/drone/Documents/robia/ros/catkin_ws/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/clean
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/clean
 .PHONY : clean
 
 # The main clean target
@@ -136,22 +133,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/preinstall
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/preinstall
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 robia/CMakeFiles/keyboard_cmd.dir/rule:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/keyboard_cmd.dir/rule
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/keyboard_cmd.dir/rule
 .PHONY : robia/CMakeFiles/keyboard_cmd.dir/rule
 
 # Convenience name for target.
@@ -160,15 +157,141 @@ keyboard_cmd: robia/CMakeFiles/keyboard_cmd.dir/rule
 
 # fast build rule for target.
 keyboard_cmd/fast:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/build
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/build
 .PHONY : keyboard_cmd/fast
+
+# Convenience name for target.
+robia/CMakeFiles/roscpp_generate_messages_cpp.dir/rule:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+.PHONY : robia/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_cpp: robia/CMakeFiles/roscpp_generate_messages_cpp.dir/rule
+.PHONY : roscpp_generate_messages_cpp
+
+# fast build rule for target.
+roscpp_generate_messages_cpp/fast:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/roscpp_generate_messages_cpp.dir/build.make robia/CMakeFiles/roscpp_generate_messages_cpp.dir/build
+.PHONY : roscpp_generate_messages_cpp/fast
+
+# Convenience name for target.
+robia/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+.PHONY : robia/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_lisp: robia/CMakeFiles/roscpp_generate_messages_lisp.dir/rule
+.PHONY : roscpp_generate_messages_lisp
+
+# fast build rule for target.
+roscpp_generate_messages_lisp/fast:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/roscpp_generate_messages_lisp.dir/build.make robia/CMakeFiles/roscpp_generate_messages_lisp.dir/build
+.PHONY : roscpp_generate_messages_lisp/fast
+
+# Convenience name for target.
+robia/CMakeFiles/roscpp_generate_messages_py.dir/rule:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/roscpp_generate_messages_py.dir/rule
+.PHONY : robia/CMakeFiles/roscpp_generate_messages_py.dir/rule
+
+# Convenience name for target.
+roscpp_generate_messages_py: robia/CMakeFiles/roscpp_generate_messages_py.dir/rule
+.PHONY : roscpp_generate_messages_py
+
+# fast build rule for target.
+roscpp_generate_messages_py/fast:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/roscpp_generate_messages_py.dir/build.make robia/CMakeFiles/roscpp_generate_messages_py.dir/build
+.PHONY : roscpp_generate_messages_py/fast
+
+# Convenience name for target.
+robia/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+.PHONY : robia/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_cpp: robia/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/rule
+.PHONY : rosgraph_msgs_generate_messages_cpp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_cpp/fast:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build.make robia/CMakeFiles/rosgraph_msgs_generate_messages_cpp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+robia/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+.PHONY : robia/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_lisp: robia/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/rule
+.PHONY : rosgraph_msgs_generate_messages_lisp
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_lisp/fast:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make robia/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
+.PHONY : rosgraph_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+robia/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+.PHONY : robia/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_py: robia/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+.PHONY : rosgraph_msgs_generate_messages_py
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_py/fast:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make robia/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
+.PHONY : rosgraph_msgs_generate_messages_py/fast
+
+# Convenience name for target.
+robia/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+.PHONY : robia/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+
+# Convenience name for target.
+std_msgs_generate_messages_cpp: robia/CMakeFiles/std_msgs_generate_messages_cpp.dir/rule
+.PHONY : std_msgs_generate_messages_cpp
+
+# fast build rule for target.
+std_msgs_generate_messages_cpp/fast:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/std_msgs_generate_messages_cpp.dir/build.make robia/CMakeFiles/std_msgs_generate_messages_cpp.dir/build
+.PHONY : std_msgs_generate_messages_cpp/fast
+
+# Convenience name for target.
+robia/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+.PHONY : robia/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+
+# Convenience name for target.
+std_msgs_generate_messages_lisp: robia/CMakeFiles/std_msgs_generate_messages_lisp.dir/rule
+.PHONY : std_msgs_generate_messages_lisp
+
+# fast build rule for target.
+std_msgs_generate_messages_lisp/fast:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/std_msgs_generate_messages_lisp.dir/build.make robia/CMakeFiles/std_msgs_generate_messages_lisp.dir/build
+.PHONY : std_msgs_generate_messages_lisp/fast
+
+# Convenience name for target.
+robia/CMakeFiles/std_msgs_generate_messages_py.dir/rule:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f CMakeFiles/Makefile2 robia/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+.PHONY : robia/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+std_msgs_generate_messages_py: robia/CMakeFiles/std_msgs_generate_messages_py.dir/rule
+.PHONY : std_msgs_generate_messages_py
+
+# fast build rule for target.
+std_msgs_generate_messages_py/fast:
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/std_msgs_generate_messages_py.dir/build.make robia/CMakeFiles/std_msgs_generate_messages_py.dir/build
+.PHONY : std_msgs_generate_messages_py/fast
 
 src/ARDrone.o: src/ARDrone.cpp.o
 .PHONY : src/ARDrone.o
 
 # target to build an object file
 src/ARDrone.cpp.o:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o
 .PHONY : src/ARDrone.cpp.o
 
 src/ARDrone.i: src/ARDrone.cpp.i
@@ -176,7 +299,7 @@ src/ARDrone.i: src/ARDrone.cpp.i
 
 # target to preprocess a source file
 src/ARDrone.cpp.i:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.i
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.i
 .PHONY : src/ARDrone.cpp.i
 
 src/ARDrone.s: src/ARDrone.cpp.s
@@ -184,7 +307,7 @@ src/ARDrone.s: src/ARDrone.cpp.s
 
 # target to generate assembly for a file
 src/ARDrone.cpp.s:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.s
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.s
 .PHONY : src/ARDrone.cpp.s
 
 src/keyboard_cmd.o: src/keyboard_cmd.cpp.o
@@ -192,7 +315,7 @@ src/keyboard_cmd.o: src/keyboard_cmd.cpp.o
 
 # target to build an object file
 src/keyboard_cmd.cpp.o:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o
 .PHONY : src/keyboard_cmd.cpp.o
 
 src/keyboard_cmd.i: src/keyboard_cmd.cpp.i
@@ -200,7 +323,7 @@ src/keyboard_cmd.i: src/keyboard_cmd.cpp.i
 
 # target to preprocess a source file
 src/keyboard_cmd.cpp.i:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.i
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.i
 .PHONY : src/keyboard_cmd.cpp.i
 
 src/keyboard_cmd.s: src/keyboard_cmd.cpp.s
@@ -208,7 +331,7 @@ src/keyboard_cmd.s: src/keyboard_cmd.cpp.s
 
 # target to generate assembly for a file
 src/keyboard_cmd.cpp.s:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.s
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(MAKE) -f robia/CMakeFiles/keyboard_cmd.dir/build.make robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.s
 .PHONY : src/keyboard_cmd.cpp.s
 
 # Help Target
@@ -224,6 +347,15 @@ help:
 	@echo "... keyboard_cmd"
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
+	@echo "... roscpp_generate_messages_cpp"
+	@echo "... roscpp_generate_messages_lisp"
+	@echo "... roscpp_generate_messages_py"
+	@echo "... rosgraph_msgs_generate_messages_cpp"
+	@echo "... rosgraph_msgs_generate_messages_lisp"
+	@echo "... rosgraph_msgs_generate_messages_py"
+	@echo "... std_msgs_generate_messages_cpp"
+	@echo "... std_msgs_generate_messages_lisp"
+	@echo "... std_msgs_generate_messages_py"
 	@echo "... test"
 	@echo "... src/ARDrone.o"
 	@echo "... src/ARDrone.i"
@@ -242,6 +374,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -H$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

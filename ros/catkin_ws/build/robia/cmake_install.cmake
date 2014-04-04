@@ -1,8 +1,8 @@
-# Install script for directory: /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia
+# Install script for directory: /home/drone/Documents/robia/ros/catkin_ws/src/robia
 
 # Set the install prefix
 IF(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  SET(CMAKE_INSTALL_PREFIX "/home/siqi/Documents/robia/robia/ros/catkin_ws/install")
+  SET(CMAKE_INSTALL_PREFIX "/home/drone/Documents/robia/ros/catkin_ws/install")
 ENDIF(NOT DEFINED CMAKE_INSTALL_PREFIX)
 STRING(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -33,17 +33,17 @@ IF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 ENDIF(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia/catkin_generated/installspace/robia.pc")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/drone/Documents/robia/ros/catkin_ws/build/robia/catkin_generated/installspace/robia.pc")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
   FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robia/cmake" TYPE FILE FILES
-    "/home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia/catkin_generated/installspace/robiaConfig.cmake"
-    "/home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia/catkin_generated/installspace/robiaConfig-version.cmake"
+    "/home/drone/Documents/robia/ros/catkin_ws/build/robia/catkin_generated/installspace/robiaConfig.cmake"
+    "/home/drone/Documents/robia/ros/catkin_ws/build/robia/catkin_generated/installspace/robiaConfig-version.cmake"
     )
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 
 IF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
-  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robia" TYPE FILE FILES "/home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/package.xml")
+  FILE(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/robia" TYPE FILE FILES "/home/drone/Documents/robia/ros/catkin_ws/src/robia/package.xml")
 ENDIF(NOT CMAKE_INSTALL_COMPONENT OR "${CMAKE_INSTALL_COMPONENT}" STREQUAL "Unspecified")
 

@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/siqi/Documents/robia/robia/ros/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/drone/Documents/robia/ros/catkin_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/siqi/Documents/robia/robia/ros/catkin_ws/build
+CMAKE_BINARY_DIR = /home/drone/Documents/robia/ros/catkin_ws/build
 
 # Utility rule file for tests.
 
@@ -60,6 +57,6 @@ CMakeFiles/tests.dir/clean:
 .PHONY : CMakeFiles/tests.dir/clean
 
 CMakeFiles/tests.dir/depend:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/siqi/Documents/robia/robia/ros/catkin_ws/src /home/siqi/Documents/robia/robia/ros/catkin_ws/src /home/siqi/Documents/robia/robia/ros/catkin_ws/build /home/siqi/Documents/robia/robia/ros/catkin_ws/build /home/siqi/Documents/robia/robia/ros/catkin_ws/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/drone/Documents/robia/ros/catkin_ws/src /home/drone/Documents/robia/ros/catkin_ws/src /home/drone/Documents/robia/ros/catkin_ws/build /home/drone/Documents/robia/ros/catkin_ws/build /home/drone/Documents/robia/ros/catkin_ws/build/CMakeFiles/tests.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/tests.dir/depend
 

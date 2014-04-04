@@ -1,17 +1,5 @@
 # generated from catkin/cmake/template/pkgConfig.cmake.in
 
-# append elements to a list and remove existing duplicates from the list
-# copied from catkin/cmake/list_append_deduplicate.cmake to keep pkgConfig
-# self contained
-macro(_list_append_deduplicate listname)
-  if(NOT "${ARGN}" STREQUAL "")
-    if(${listname})
-      list(REMOVE_ITEM ${listname} ${ARGN})
-    endif()
-    list(APPEND ${listname} ${ARGN})
-  endif()
-endmacro()
-
 # append elements to a list if they are not already in the list
 # copied from catkin/cmake/list_append_unique.cmake to keep pkgConfig
 # self contained
@@ -24,39 +12,43 @@ macro(_list_append_unique listname)
   endforeach()
 endmacro()
 
-# pack a list of libraries with optional build configuration keywords
-# copied from catkin/cmake/catkin_libraries.cmake to keep pkgConfig
-# self contained
-macro(_pack_libraries_with_build_configuration VAR)
-  set(${VAR} "")
-  set(_argn ${ARGN})
-  list(LENGTH _argn _count)
-  set(_index 0)
-  while(${_index} LESS ${_count})
-    list(GET _argn ${_index} lib)
-    if("${lib}" MATCHES "^debug|optimized|general$")
-      math(EXPR _index "${_index} + 1")
-      if(${_index} EQUAL ${_count})
-        message(FATAL_ERROR "_pack_libraries_with_build_configuration() the list of libraries '${ARGN}' ends with '${lib}' which is a build configuration keyword and must be followed by a library")
+# remove duplicate libraries, generalized from PCLConfig.cmake.in
+macro(_remove_duplicate_libraries _unfiltered_libraries _final_filtered_libraries)
+  set(_filtered_libraries)
+  set(_debug_libraries)
+  set(_optimized_libraries)
+  set(_other_libraries)
+  set(_waiting_for_debug 0)
+  set(_waiting_for_optimized 0)
+  set(_library_position -1)
+  foreach(library ${${_unfiltered_libraries}})
+    if("${library}" STREQUAL "debug")
+      set(_waiting_for_debug 1)
+    elseif("${library}" STREQUAL "optimized")
+      set(_waiting_for_optimized 1)
+    elseif(_waiting_for_debug)
+      list(FIND _debug_libraries "${library}" library_position)
+      if(library_position EQUAL -1)
+        list(APPEND ${_filtered_libraries} debug ${library})
+        list(APPEND _debug_libraries ${library})
       endif()
-      list(GET _argn ${_index} library)
-      list(APPEND ${VAR} "${lib}${CATKIN_BUILD_CONFIGURATION_KEYWORD_SEPARATOR}${library}")
-    else()
-      list(APPEND ${VAR} "${lib}")
-    endif()
-    math(EXPR _index "${_index} + 1")
-  endwhile()
-endmacro()
-
-# unpack a list of libraries with optional build configuration keyword prefixes
-# copied from catkin/cmake/catkin_libraries.cmake to keep pkgConfig
-# self contained
-macro(_unpack_libraries_with_build_configuration VAR)
-  set(${VAR} "")
-  foreach(lib ${ARGN})
-    string(REGEX REPLACE "^(debug|optimized|general)${CATKIN_BUILD_CONFIGURATION_KEYWORD_SEPARATOR}(.+)$" "\\1;\\2" lib "${lib}")
-    list(APPEND ${VAR} "${lib}")
-  endforeach()
+      set(_waiting_for_debug 0)
+    elseif(_waiting_for_optimized)
+      list(FIND _optimized_libraries "${library}" library_position)
+      if(library_position EQUAL -1)
+        list(APPEND ${_filtered_libraries} optimized ${library})
+        list(APPEND _optimized_libraries ${library})
+      endif()
+      set(_waiting_for_optimized 0)
+    else("${library}" STREQUAL "debug")
+      list(FIND _other_libraries "${library}" library_position)
+      if(library_position EQUAL -1)
+        list(APPEND ${_filtered_libraries} ${library})
+        list(APPEND _other_libraries ${library})
+      endif()
+    endif("${library}" STREQUAL "debug")
+  endforeach(library)
+  set(_final_filtered_libraries _filtered_libraries)
 endmacro()
 
 
@@ -67,14 +59,14 @@ set(robia_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(robia_SOURCE_PREFIX /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia)
-  set(robia_DEVEL_PREFIX /home/siqi/Documents/robia/robia/ros/catkin_ws/devel)
+  set(robia_SOURCE_PREFIX /home/drone/Documents/robia/ros/catkin_ws/src/robia)
+  set(robia_DEVEL_PREFIX /home/drone/Documents/robia/ros/catkin_ws/devel)
   set(robia_INSTALL_PREFIX "")
   set(robia_PREFIX ${robia_DEVEL_PREFIX})
 else()
   set(robia_SOURCE_PREFIX "")
   set(robia_DEVEL_PREFIX "")
-  set(robia_INSTALL_PREFIX /home/siqi/Documents/robia/robia/ros/catkin_ws/install)
+  set(robia_INSTALL_PREFIX /home/drone/Documents/robia/ros/catkin_ws/install)
   set(robia_PREFIX ${robia_INSTALL_PREFIX})
 endif()
 
@@ -103,7 +95,7 @@ if(NOT "" STREQUAL "")
         message(FATAL_ERROR "Project 'robia' specifies '${idir}' as an include dir, which is not found.  It does not exist in '${include}'.  Ask the maintainer 'siqi <siqi@todo.todo>' to fix it.")
       endif()
     else()
-      message(FATAL_ERROR "Project 'robia' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/siqi/Documents/robia/robia/ros/catkin_ws/install/${idir}'.  Ask the maintainer 'siqi <siqi@todo.todo>' to fix it.")
+      message(FATAL_ERROR "Project 'robia' specifies '${idir}' as an include dir, which is not found.  It does neither exist as an absolute directory nor in '/home/drone/Documents/robia/ros/catkin_ws/install/${idir}'.  Ask the maintainer 'siqi <siqi@todo.todo>' to fix it.")
     endif()
     _list_append_unique(robia_INCLUDE_DIRS ${include})
   endforeach()
@@ -111,10 +103,7 @@ endif()
 
 set(libraries "")
 foreach(library ${libraries})
-  # keep build configuration keywords, target names and absolute libraries as-is
-  if("${library}" MATCHES "^debug|optimized|general$")
-    list(APPEND robia_LIBRARIES ${library})
-  elseif(TARGET ${library})
+  if(TARGET ${library})
     list(APPEND robia_LIBRARIES ${library})
   elseif(IS_ABSOLUTE ${library})
     list(APPEND robia_LIBRARIES ${library})
@@ -122,7 +111,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/siqi/Documents/robia/robia/ros/catkin_ws/install/lib;/opt/ros/hydro/lib)
+    foreach(path /home/drone/Documents/robia/ros/catkin_ws/install/lib;/home/drone/catkin_ws/devel/lib;/opt/ros/groovy/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)
@@ -170,17 +159,14 @@ foreach(depend ${depends})
     find_package(${robia_dep} REQUIRED ${depend_list})
   endif()
   _list_append_unique(robia_INCLUDE_DIRS ${${robia_dep}_INCLUDE_DIRS})
-
-  # merge build configuration keywords with library names to correctly deduplicate
-  _pack_libraries_with_build_configuration(robia_LIBRARIES ${robia_LIBRARIES})
-  _pack_libraries_with_build_configuration(_libraries ${${robia_dep}_LIBRARIES})
-  _list_append_deduplicate(robia_LIBRARIES ${_libraries})
-  # undo build configuration keyword merging after deduplication
-  _unpack_libraries_with_build_configuration(robia_LIBRARIES ${robia_LIBRARIES})
-
+  list(APPEND robia_LIBRARIES ${${robia_dep}_LIBRARIES})
   _list_append_unique(robia_LIBRARY_DIRS ${${robia_dep}_LIBRARY_DIRS})
   list(APPEND robia_EXPORTED_TARGETS ${${robia_dep}_EXPORTED_TARGETS})
 endforeach()
+
+if(robia_LIBRARIES)
+  _remove_duplicate_libraries(robia_LIBRARIES robia_LIBRARIES)
+endif()
 
 set(pkg_cfg_extras "")
 foreach(extra ${pkg_cfg_extras})

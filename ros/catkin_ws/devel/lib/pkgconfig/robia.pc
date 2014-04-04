@@ -1,8 +1,8 @@
-prefix=/home/siqi/Documents/robia/robia/ros/catkin_ws/devel
+prefix=/home/drone/Documents/robia/ros/catkin_ws/devel
 
 Name: robia
 Description: Description of robia
 Version: 0.0.0
 Cflags: 
-Libs: -L/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib 
+Libs: -L/home/drone/Documents/robia/ros/catkin_ws/devel/lib 
 Requires: 

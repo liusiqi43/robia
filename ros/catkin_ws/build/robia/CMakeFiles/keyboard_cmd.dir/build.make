@@ -31,14 +31,11 @@ CMAKE_COMMAND = /usr/bin/cmake
 # The command to remove a file.
 RM = /usr/bin/cmake -E remove -f
 
-# Escaping for special characters.
-EQUALS = =
-
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/siqi/Documents/robia/robia/ros/catkin_ws/src
+CMAKE_SOURCE_DIR = /home/drone/Documents/robia/ros/catkin_ws/src
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/siqi/Documents/robia/robia/ros/catkin_ws/build
+CMAKE_BINARY_DIR = /home/drone/Documents/robia/ros/catkin_ws/build
 
 # Include any dependencies generated for this target.
 include robia/CMakeFiles/keyboard_cmd.dir/depend.make
@@ -50,18 +47,18 @@ include robia/CMakeFiles/keyboard_cmd.dir/progress.make
 include robia/CMakeFiles/keyboard_cmd.dir/flags.make
 
 robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o: robia/CMakeFiles/keyboard_cmd.dir/flags.make
-robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o: /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/src/keyboard_cmd.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/siqi/Documents/robia/robia/ros/catkin_ws/build/CMakeFiles $(CMAKE_PROGRESS_1)
+robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o: /home/drone/Documents/robia/ros/catkin_ws/src/robia/src/keyboard_cmd.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drone/Documents/robia/ros/catkin_ws/build/CMakeFiles $(CMAKE_PROGRESS_1)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o"
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o -c /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/src/keyboard_cmd.cpp
+	cd /home/drone/Documents/robia/ros/catkin_ws/build/robia && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o -c /home/drone/Documents/robia/ros/catkin_ws/src/robia/src/keyboard_cmd.cpp
 
 robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.i"
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/src/keyboard_cmd.cpp > CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.i
+	cd /home/drone/Documents/robia/ros/catkin_ws/build/robia && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/drone/Documents/robia/ros/catkin_ws/src/robia/src/keyboard_cmd.cpp > CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.i
 
 robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.s"
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/src/keyboard_cmd.cpp -o CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.s
+	cd /home/drone/Documents/robia/ros/catkin_ws/build/robia && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/drone/Documents/robia/ros/catkin_ws/src/robia/src/keyboard_cmd.cpp -o CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.s
 
 robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o.requires:
 .PHONY : robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o.requires
@@ -73,18 +70,18 @@ robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o.provides: robia/CMakeFi
 robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o.provides.build: robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o
 
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: robia/CMakeFiles/keyboard_cmd.dir/flags.make
-robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/src/ARDrone.cpp
-	$(CMAKE_COMMAND) -E cmake_progress_report /home/siqi/Documents/robia/robia/ros/catkin_ws/build/CMakeFiles $(CMAKE_PROGRESS_2)
+robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o: /home/drone/Documents/robia/ros/catkin_ws/src/robia/src/ARDrone.cpp
+	$(CMAKE_COMMAND) -E cmake_progress_report /home/drone/Documents/robia/ros/catkin_ws/build/CMakeFiles $(CMAKE_PROGRESS_2)
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Building CXX object robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o"
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o -c /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/src/ARDrone.cpp
+	cd /home/drone/Documents/robia/ros/catkin_ws/build/robia && /usr/bin/c++   $(CXX_DEFINES) $(CXX_FLAGS) -o CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o -c /home/drone/Documents/robia/ros/catkin_ws/src/robia/src/ARDrone.cpp
 
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.i"
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/src/ARDrone.cpp > CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.i
+	cd /home/drone/Documents/robia/ros/catkin_ws/build/robia && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -E /home/drone/Documents/robia/ros/catkin_ws/src/robia/src/ARDrone.cpp > CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.i
 
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.s"
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia/src/ARDrone.cpp -o CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.s
+	cd /home/drone/Documents/robia/ros/catkin_ws/build/robia && /usr/bin/c++  $(CXX_DEFINES) $(CXX_FLAGS) -S /home/drone/Documents/robia/ros/catkin_ws/src/robia/src/ARDrone.cpp -o CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.s
 
 robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o.requires:
 .PHONY : robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o.requires
@@ -103,32 +100,29 @@ keyboard_cmd_OBJECTS = \
 # External object files for target keyboard_cmd
 keyboard_cmd_EXTERNAL_OBJECTS =
 
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: robia/CMakeFiles/keyboard_cmd.dir/build.make
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/hydro/lib/libroscpp.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_signals-mt.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_filesystem-mt.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/hydro/lib/librosconsole.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/hydro/lib/librosconsole_log4cxx.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/hydro/lib/librosconsole_backend_interface.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/liblog4cxx.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_regex-mt.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/hydro/lib/libxmlrpcpp.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/hydro/lib/libroscpp_serialization.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/hydro/lib/librostime.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_date_time-mt.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_system-mt.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_thread-mt.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/x86_64-linux-gnu/libpthread.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/hydro/lib/libcpp_common.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/hydro/lib/libconsole_bridge.so
-/home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: robia/CMakeFiles/keyboard_cmd.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable /home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd"
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/keyboard_cmd.dir/link.txt --verbose=$(VERBOSE)
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: robia/CMakeFiles/keyboard_cmd.dir/src/ARDrone.cpp.o
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/groovy/lib/libroscpp.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/i386-linux-gnu/libpthread.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_signals-mt.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_filesystem-mt.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_system-mt.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/groovy/lib/libcpp_common.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/groovy/lib/libroscpp_serialization.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/groovy/lib/librostime.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_date_time-mt.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_thread-mt.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/groovy/lib/librosconsole.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/libboost_regex-mt.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /usr/lib/liblog4cxx.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: /opt/ros/groovy/lib/libxmlrpcpp.so
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: robia/CMakeFiles/keyboard_cmd.dir/build.make
+/home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd: robia/CMakeFiles/keyboard_cmd.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --red --bold "Linking CXX executable /home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd"
+	cd /home/drone/Documents/robia/ros/catkin_ws/build/robia && $(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/keyboard_cmd.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-robia/CMakeFiles/keyboard_cmd.dir/build: /home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd
+robia/CMakeFiles/keyboard_cmd.dir/build: /home/drone/Documents/robia/ros/catkin_ws/devel/lib/robia/keyboard_cmd
 .PHONY : robia/CMakeFiles/keyboard_cmd.dir/build
 
 robia/CMakeFiles/keyboard_cmd.dir/requires: robia/CMakeFiles/keyboard_cmd.dir/src/keyboard_cmd.cpp.o.requires
@@ -136,10 +130,10 @@ robia/CMakeFiles/keyboard_cmd.dir/requires: robia/CMakeFiles/keyboard_cmd.dir/sr
 .PHONY : robia/CMakeFiles/keyboard_cmd.dir/requires
 
 robia/CMakeFiles/keyboard_cmd.dir/clean:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia && $(CMAKE_COMMAND) -P CMakeFiles/keyboard_cmd.dir/cmake_clean.cmake
+	cd /home/drone/Documents/robia/ros/catkin_ws/build/robia && $(CMAKE_COMMAND) -P CMakeFiles/keyboard_cmd.dir/cmake_clean.cmake
 .PHONY : robia/CMakeFiles/keyboard_cmd.dir/clean
 
 robia/CMakeFiles/keyboard_cmd.dir/depend:
-	cd /home/siqi/Documents/robia/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/siqi/Documents/robia/robia/ros/catkin_ws/src /home/siqi/Documents/robia/robia/ros/catkin_ws/src/robia /home/siqi/Documents/robia/robia/ros/catkin_ws/build /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia /home/siqi/Documents/robia/robia/ros/catkin_ws/build/robia/CMakeFiles/keyboard_cmd.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/drone/Documents/robia/ros/catkin_ws/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/drone/Documents/robia/ros/catkin_ws/src /home/drone/Documents/robia/ros/catkin_ws/src/robia /home/drone/Documents/robia/ros/catkin_ws/build /home/drone/Documents/robia/ros/catkin_ws/build/robia /home/drone/Documents/robia/ros/catkin_ws/build/robia/CMakeFiles/keyboard_cmd.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : robia/CMakeFiles/keyboard_cmd.dir/depend
 
