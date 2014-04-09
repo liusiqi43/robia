@@ -4,7 +4,7 @@ project(robia)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg image_transport cv_bridge sensor_msgs)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -97,7 +97,7 @@ include_directories(${Boost_INCLUDE_DIRS})
 # )
 
 ## Declare a cpp executable
-add_executable(keyboard_cmd src/keyboard_cmd.cpp src/ARDrone.cpp)
+add_executable(keyboard_cmd src/keyboard_cmd.cpp src/ARDrone.cpp src/camera.cpp)
 target_link_libraries(keyboard_cmd ${catkin_LIBRARIES})
 
 ## Add cmake target dependencies of the executable/library

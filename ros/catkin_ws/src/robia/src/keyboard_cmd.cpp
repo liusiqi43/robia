@@ -97,6 +97,10 @@ char nonBlockingGetCh() {
         idleCount = 0; 
         break;
       }
+      case 'v' : {
+        drone->toggleCamDisplay();
+        break;
+      }
       case -1: {
         if (idleCount >= 0) {
           ++idleCount;

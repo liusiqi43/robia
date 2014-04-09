@@ -3,15 +3,28 @@
 #include "std_msgs/Empty.h"
 
 #include "ARDrone.h"
+#include "camera.h"
 
-ARDrone::ARDrone() : TWIST_LINEAR(0.3), TWIST_ANGULAR(0.3) {
+const double ARDrone::TWIST_LINEAR = 0.3;
+const double ARDrone::TWIST_ANGULAR = 0.3;
+const int ARDrone::FRONT_CAM = 0;
+const int ARDrone::BOTTOM_CAM = 1;
+
+
+ARDrone::ARDrone() {
 	// keep queue size to 1
     this->pubTakeOff = this->n.advertise<std_msgs::Empty>("/ardrone/takeoff", 0);
     this->pubLand = this->n.advertise<std_msgs::Empty>("/ardrone/land", 0);
     this->pubReset = this->n.advertise<std_msgs::Empty>("/ardrone/reset", 0);
     this->pubMove = this->n.advertise<geometry_msgs::Twist>("/cmd_vel", 0);
+
+    this->front_cam = new Camera("/ardrone/front/image_raw");
 }
 
+ARDrone::~ARDrone() {
+    delete this->front_cam;
+}
+ 
 void ARDrone::takeOff() {
 	this->pubTakeOff.publish(std_msgs::Empty());
 	ROS_INFO("taking off...");
@@ -89,4 +102,15 @@ void ARDrone::hover() {
 	cmd_msg.angular.y = 0.0;
 
     this->pubMove.publish(cmd_msg);
+}
+
+void ARDrone::toggleCamDisplay(int index) {
+    switch (index) {
+        case FRONT_CAM:
+            this->front_cam->toggleDisplay();
+            break;
+        case BOTTOM_CAM:
+            ROS_INFO("NO BOTTOM_CAM");
+            break;
+    }
 }
