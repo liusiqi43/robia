@@ -7,6 +7,7 @@
 
 #include "ARDrone.h"
 
+#include <image_transport/image_transport.h>
 
 char nonBlockingGetCh() {
     static struct termios oldt, newt;
@@ -35,6 +36,8 @@ char nonBlockingGetCh() {
     ros::Rate loop_rate(FREQ);
 
     ARDrone *drone = new ARDrone();
+
+
     int idleCount = -1;
 
     while (ros::ok())
@@ -95,10 +98,6 @@ char nonBlockingGetCh() {
       case 'q' : {
         drone->rotateLeft();
         idleCount = 0; 
-        break;
-      }
-      case 'v' : {
-        drone->toggleCamDisplay();
         break;
       }
       case -1: {

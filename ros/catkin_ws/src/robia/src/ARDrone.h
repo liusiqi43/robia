@@ -32,8 +32,6 @@ public:
 	void rotateLeft();
 	void rotateRight();
 
-	void toggleCamDisplay(int index = FRONT_CAM);
-
 private:
 
 	ros::NodeHandle n;

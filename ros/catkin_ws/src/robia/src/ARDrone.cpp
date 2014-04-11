@@ -103,14 +103,3 @@ void ARDrone::hover() {
 
     this->pubMove.publish(cmd_msg);
 }
-
-void ARDrone::toggleCamDisplay(int index) {
-    switch (index) {
-        case FRONT_CAM:
-            this->front_cam->toggleDisplay();
-            break;
-        case BOTTOM_CAM:
-            ROS_INFO("NO BOTTOM_CAM");
-            break;
-    }
-}

@@ -24,7 +24,7 @@ int main(int argc, char** argv)
     vector<GR::ImageFilter*> filters;
     GR::BackgroundFilter *bgFilter = new GR::BackgroundFilter(5);
     filters.push_back(new GR::DyeFilter(atof(argv[1]), 0.7, 20));
-    filters.push_back(bgFilter);
+    // filters.push_back(bgFilter);
 
     cv::Mat output;
     cv::namedWindow("motion/color filtered",CV_WINDOW_NORMAL);
