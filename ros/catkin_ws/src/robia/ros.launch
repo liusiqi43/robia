@@ -1,0 +1,5 @@
+<launch>
+  <node name="ardrone_driver" pkg="ardrone_autonomy" type="ardrone_driver" output="screen"/>
+  <node name="keyboard_cmd" pkg="robia" type="keyboard_cmd" output="screen"/>
+</launch>
+
