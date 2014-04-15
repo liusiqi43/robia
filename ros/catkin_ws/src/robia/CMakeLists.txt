@@ -4,7 +4,7 @@ project(robia)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg)
+find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg image_transport cv_bridge sensor_msgs)
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 
@@ -97,8 +97,13 @@ include_directories(${Boost_INCLUDE_DIRS})
 # )
 
 ## Declare a cpp executable
-add_executable(keyboard_cmd src/keyboard_cmd.cpp src/ARDrone.cpp)
+add_executable(keyboard_cmd src/keyboard_cmd.cpp src/ARDrone.cpp src/camera.cpp)
 target_link_libraries(keyboard_cmd ${catkin_LIBRARIES})
+
+
+add_executable(colorFilterNode src/colorFilterNode.cpp src/dyeFilter.cpp)
+target_link_libraries(colorFilterNode ${catkin_LIBRARIES})
+
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
@@ -124,9 +129,16 @@ target_link_libraries(keyboard_cmd ${catkin_LIBRARIES})
 # )
 
 ## Mark executables and/or libraries for installation
-# install(TARGETS robia robia_node
+#install(TARGETS robia keyboard_cmd
 #   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-#   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+ #  LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+#   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+# )
+
+
+#install(TARGETS robia mytestnode
+#   ARCHIVE DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
+##   LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
 #   RUNTIME DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 # )
 

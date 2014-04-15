@@ -1,7 +1,0 @@
-set(_CATKIN_CURRENT_PACKAGE "robia")
-set(robia_MAINTAINER "siqi <siqi@todo.todo>")
-set(robia_DEPRECATED "")
-set(robia_VERSION "0.0.0")
-set(robia_BUILD_DEPENDS "roscpp" "std_msgs" "message_generation")
-set(robia_RUN_DEPENDS "message_runtime" "roscpp" "std_msgs")
-set(robia_BUILDTOOL_DEPENDS "catkin")

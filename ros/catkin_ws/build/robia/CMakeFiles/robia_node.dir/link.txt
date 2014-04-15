@@ -1,1 +1,0 @@
-/usr/bin/c++       CMakeFiles/robia_node.dir/src/keyboard_cmd.cpp.o  -o /home/siqi/Documents/robia/robia/ros/catkin_ws/devel/lib/robia/robia_node -rdynamic 

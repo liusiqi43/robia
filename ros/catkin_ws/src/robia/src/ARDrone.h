@@ -1,15 +1,21 @@
+#ifndef ARDRONE_H__
+#define ARDRONE_H__
+
 #include <boost/utility.hpp>
 #include "ros/ros.h"
 #include "std_msgs/Empty.h"
-
-
+#include "camera.h"
 
 class ARDrone : boost::noncopyable {
 public:
-	const double TWIST_LINEAR;
-	const double TWIST_ANGULAR;
+	static const double TWIST_LINEAR;
+	static const double TWIST_ANGULAR;
+
+	static const int FRONT_CAM; 
+	static const int BOTTOM_CAM; 
 
 	ARDrone();
+	~ARDrone();
 	void takeOff();
 	void land();
 	void reset();
@@ -34,4 +40,8 @@ private:
 	ros::Publisher pubLand;
 	ros::Publisher pubReset;
 	ros::Publisher pubMove;
+
+	Camera *front_cam;
 };
+
+#endif /* end of include guard: ARDRONE_H__ */
