@@ -100,6 +100,11 @@ include_directories(${Boost_INCLUDE_DIRS})
 add_executable(keyboard_cmd src/keyboard_cmd.cpp src/ARDrone.cpp src/camera.cpp)
 target_link_libraries(keyboard_cmd ${catkin_LIBRARIES})
 
+
+add_executable(colorFilterNode src/colorFilterNode.cpp src/dyeFilter.cpp)
+target_link_libraries(colorFilterNode ${catkin_LIBRARIES})
+
+
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes
 # add_dependencies(robia_node robia_generate_messages_cpp)
