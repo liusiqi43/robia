@@ -13,6 +13,8 @@ image_transport::Publisher pubImageFiltrer;
 
 void imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
     cv_bridge::CvImagePtr cv_ptr;
+
+    GR::DyeFilter *dyeFilter = new GR::DyeFilter(1., 0.5, 50);
     try {
       cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
     } catch (cv_bridge::Exception& e) {
@@ -20,9 +22,17 @@ void imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
       return;
     }
 
-    // Draw an example circle on the video stream
-    if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
-      cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
+    // cv::Mat output;
+    dyeFilter->process(cv_ptr->image, cv_ptr->image);
+    delete dyeFilter;
+
+
+    // try {
+    //   cv_ptr_output = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
+    // } catch (cv_bridge::Exception& e) {
+    //   ROS_ERROR("cv_bridge exception: %s", e.what());
+    //   return;
+    // }
 
     // Publish processed image
     pubImageFiltrer.publish(cv_ptr->toImageMsg());
