@@ -294,7 +294,8 @@ namespace dye {
             cv::Mat& output,
             const DyeParams& params,
             cvBGR true_value,
-            cvBGR false_value) 
+            cvBGR false_value, 
+            std::vector<AI::Point> v;) 
     {
 
         input.copyTo(output);
