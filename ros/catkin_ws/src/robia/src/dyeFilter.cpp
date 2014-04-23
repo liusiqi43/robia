@@ -26,7 +26,8 @@ namespace GR{
     void DyeFilter::process( const cv::Mat& src, cv::Mat& output, std::vector<cv::Point2d>& points){
         dye::cvBGR true_value = this->params.getRef();
         dye::cvBGR false_value = dye::cvBGR(0,0,0);
-
+	
+	points.clear();
         src.copyTo(output);
         for(int i = 0; i < src.rows; i++)
         {
@@ -36,7 +37,7 @@ namespace GR{
 
                 if (params.test(bgr)) {
                     output.at<dye::cvBGR>(i,j) = true_value;
-                    points.push_back(cv::Point2d(i, j));
+                    points.push_back(cv::Point2d(j, i));
                 } else {
                     output.at<dye::cvBGR>(i,j) = false_value;
                 }

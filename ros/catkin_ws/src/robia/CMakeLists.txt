@@ -1,7 +1,17 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(robia)
 
-set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+# PkgConfig stuff
+
+
+find_package(PkgConfig)
+
+
+pkg_check_modules(VQ vq2 REQUIRED) # Cree des variables VQ_* où le séparateur est un ;
+
+string(REPLACE ";" " " VQ_CFLAGS "${VQ_CFLAGS}")
+string(REPLACE ";" " " VQ_LDFLAGS "${VQ_LDFLAGS}")
+
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -105,6 +115,10 @@ target_link_libraries(keyboard_cmd ${catkin_LIBRARIES})
 
 add_executable(AI src/AI.cpp src/dyeFilter.cpp)
 target_link_libraries(AI ${catkin_LIBRARIES})
+set_target_properties(AI PROPERTIES 
+  COMPILE_FLAGS "${VQ_CFLAGS}" 
+  LINK_FLAGS    "${VQ_LDFLAGS}"
+)
 
 
 ## Add cmake target dependencies of the executable/library

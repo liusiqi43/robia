@@ -59,11 +59,10 @@ public:
 	};
 	typedef vq2::unit::Learn<Unit,Learn> UnitLearn;
 
-		// Parametres de l'algo a bien comprendre....
-	#define NB_SAMPLES 20000
 	#define TARGET      2e-4
 	class Params {
 	public:
+	  int nb_samples;
 
 	  // GNG-T
 		int ageMax(void)           {return 20;}
@@ -74,7 +73,7 @@ public:
 
 	  // Evolution
 		double target(void)        {return TARGET;}
-		int nbSamples(void)        {return NB_SAMPLES;}
+		int nbSamples(void)        {return nb_samples;}
 		double lowPassCoef(void)   {return .4;}
 		double delta(void)         {return .75;}
 		double margin(void)        {return .2;}
@@ -95,7 +94,7 @@ public:
 			cv::Point2d A = (*(e.n1)).value.prototype();
 			cv::Point2d B = (*(e.n2)).value.prototype();
 
-			cv::line(rImage, A, B, CV_RGB(0, 0, 0));
+			cv::line(rImage, A, B, CV_RGB(255, 255, 255));
 
 	    return false; // the element should not be removed.
 	}
@@ -126,5 +125,6 @@ private:
 	Learn            learn;
 	UnitLearn        unit_learn;
 	Evolution        evolution;
+	std::vector<cv::Point2d> gngt_input;
 	Graph		     graph;
 };
