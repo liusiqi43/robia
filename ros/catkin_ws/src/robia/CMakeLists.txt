@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(robia)
 
+set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
+
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
@@ -101,8 +103,8 @@ add_executable(keyboard_cmd src/keyboard_cmd.cpp src/ARDrone.cpp src/camera.cpp)
 target_link_libraries(keyboard_cmd ${catkin_LIBRARIES})
 
 
-add_executable(colorFilterNode src/colorFilterNode.cpp src/dyeFilter.cpp)
-target_link_libraries(colorFilterNode ${catkin_LIBRARIES})
+add_executable(AI src/AI.cpp src/dyeFilter.cpp)
+target_link_libraries(AI ${catkin_LIBRARIES})
 
 
 ## Add cmake target dependencies of the executable/library

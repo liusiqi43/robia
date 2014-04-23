@@ -3,7 +3,6 @@
 #include <opencv2/opencv.hpp>
 #include <exception>
 #include "dye.h"
-#include "filter.h"
 
 // gesture recognition
 namespace GR{
@@ -15,7 +14,7 @@ namespace GR{
     };
 
 
-    class DyeFilter: public ImageFilter {
+    class DyeFilter {
         private:
             dye::DyeParams params;
 
@@ -23,6 +22,6 @@ namespace GR{
             DyeFilter(double ref, 
                     double tolerance=.3, 
                     unsigned char darkThreshold=50); 
-            void process(const cv::Mat& in, cv::Mat& out);
+            void process( const cv::Mat& src, cv::Mat& output, std::vector<cv::Point2d>& points);
     };
 }

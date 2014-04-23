@@ -2,7 +2,6 @@
 #include <vector>
 #include "dyeFilter.h"
 #include "dye.h"
-#include "AI.h"
 
 dye::DyeParams::DyeParams(double colorIndex, 
         double tolerance, unsigned char darkThreshold)
@@ -24,7 +23,7 @@ namespace GR{
     {
     }
 
-    void DyeFilter::process( const cv::Mat& src, cv::Mat& output, std::vector<AI::Point>& points){
+    void DyeFilter::process( const cv::Mat& src, cv::Mat& output, std::vector<cv::Point2d>& points){
         dye::cvBGR true_value = this->params.getRef();
         dye::cvBGR false_value = dye::cvBGR(0,0,0);
 
@@ -36,10 +35,10 @@ namespace GR{
                 dye::cvBGR bgr = src.at<dye::cvBGR>(i,j);
 
                 if (params.test(bgr)) {
-                    output.at<cvBGR>(i,j) = true_value;
-                    points.push_back(AI::Point(i, j));
+                    output.at<dye::cvBGR>(i,j) = true_value;
+                    points.push_back(cv::Point2d(i, j));
                 } else {
-                    output.at<cvBGR>(i,j) = false_value;
+                    output.at<dye::cvBGR>(i,j) = false_value;
                 }
             }
         }

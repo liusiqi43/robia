@@ -18,7 +18,7 @@ ARDrone::ARDrone() {
     this->pubReset = this->n.advertise<std_msgs::Empty>("/ardrone/reset", 0);
     this->pubMove = this->n.advertise<geometry_msgs::Twist>("/cmd_vel", 0);
 
-    this->front_cam = new Camera("robia/colorImageFilter");
+    this->front_cam = new Camera("/robia/gngt_output");
 }
 
 ARDrone::~ARDrone() {
