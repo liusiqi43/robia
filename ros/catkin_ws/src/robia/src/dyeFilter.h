@@ -1,12 +1,14 @@
+// Seulement fait #include une fois. En particulier, c'est pour les fichiers .h
 #pragma once
 
 #include <opencv2/opencv.hpp>
 #include <exception>
 #include "dye.h"
 
-// gesture recognition
+// Gesture recognition
 namespace GR{
 
+    // Faire une excepetion d'un programme
     class ColorIndexOutOfRange : public std::exception {
         virtual const char* what() const throw(){
             return "Color index out of range, [0..6]";

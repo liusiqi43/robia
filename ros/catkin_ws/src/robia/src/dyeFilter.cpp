@@ -37,6 +37,7 @@ namespace GR{
 
                 if (params.test(bgr)) {
                     output.at<dye::cvBGR>(i,j) = true_value;
+                    // Definir un point(x,y) 
                     points.push_back(cv::Point2d(j, i));
                 } else {
                     output.at<dye::cvBGR>(i,j) = false_value;

@@ -42,6 +42,7 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   try {
     cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
   } catch (cv_bridge::Exception& e) {
+    // Afficher les détailles des erreurs
     ROS_ERROR("cv_bridge exception: %s", e.what());
     return;
   }

@@ -33,7 +33,7 @@ public:
 	void rotateRight();
 
 private:
-
+	//NodeHandle qui identifie le Node
 	ros::NodeHandle n;
 
 	ros::Publisher pubTakeOff;

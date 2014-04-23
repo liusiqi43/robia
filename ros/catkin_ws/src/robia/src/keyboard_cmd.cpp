@@ -40,6 +40,7 @@ char nonBlockingGetCh() {
 
     int idleCount = -1;
 
+    //define different keyboard_commandes
     while (ros::ok())
     {
       char c = nonBlockingGetCh();
@@ -100,6 +101,7 @@ char nonBlockingGetCh() {
         idleCount = 0; 
         break;
       }
+      //case defaut
       case -1: {
         if (idleCount >= 0) {
           ++idleCount;
@@ -114,6 +116,7 @@ char nonBlockingGetCh() {
     }
 
     ros::spinOnce();
+    //fait attendre pour voir une frequence de 100
     loop_rate.sleep();
   }
 

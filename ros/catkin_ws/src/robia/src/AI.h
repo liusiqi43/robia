@@ -46,6 +46,7 @@ public:
 	};
 	typedef vq2::unit::Similarity<Unit,Similarity> UnitSimilarity;
 
+	// Comprend pas. ?????????????????????? coef sert a quoi?
 	class Learn {
 	public:
 		typedef cv::Point2d sample_type;
@@ -102,7 +103,7 @@ public:
 
 	// This is a loop functor class.
 class DisplayVertex {
-	   cv::Mat&  rImage; // reference sur l'image opencv
+	   cv::Mat&  rImage; // Référence sur l'image opencv
 	public:
 		DisplayVertex(cv::Mat &img) : rImage(img) {}
 
@@ -111,7 +112,7 @@ class DisplayVertex {
 
 			cv::circle(rImage, A, 3, CV_RGB(255, 0, 0));
 
-	    return false; // the element should not be removed.
+	    return false; // The element should not be removed.
 	}
 };
 
