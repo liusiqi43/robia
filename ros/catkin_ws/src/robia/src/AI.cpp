@@ -30,12 +30,12 @@ AI::AI() : DESIRED_SAMPLE_SIZE(100),
 
 
   //Set properties  
- int askFileTypeBox=0; //-1 is show box of codec  
+ int askFileTypeBox=1; //-1 is show box of codec  
  int Color = 1;  
  cv::Size S = cv::Size( 320, 240 );  
   
  //make output video file  
- this->mOutVideo.open("../../output.avi", askFileTypeBox, 15, S, Color);  
+ mOutVideo.open("~/output.avi", CV_FOURCC('P','I','M','1'), 24, S, Color);  
 }
 
 AI::~AI() {
