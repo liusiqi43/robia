@@ -35,7 +35,7 @@ AI::AI() : DESIRED_SAMPLE_SIZE(100),
  cv::Size S = cv::Size( 320, 240 );  
   
  //make output video file  
- this->mOutVideo.open("/home/siqi/Documents/robia/output.avi", askFileTypeBox, 15, S, Color);  
+ this->mOutVideo.open("../../output.avi", askFileTypeBox, 15, S, Color);  
 }
 
 AI::~AI() {
