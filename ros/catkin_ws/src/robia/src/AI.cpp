@@ -88,14 +88,15 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   }
 
 
-  DisplayVertex display_v(cv_ptr->image);
-  DisplayEdge display_e(cv_ptr->image);
 
   // Composantes connexes
-  std::map<unsigned int,Graph::Component*> components;
+  std::map<unsigned int, Graph::Component*> components;
   graph.computeConnectedComponents(components,false);
 
   for(auto iter = components.begin();iter != components.end();++iter) {
+    VertexLooper vertexLooper(cv_ptr->image);
+    EdgeLooper edgeLooper(cv_ptr->image);
+
     if (labelToColor.find((*iter).first) == labelToColor.end()) {
       // new label
       labelToColor.insert(std::pair<unsigned int, cv::Scalar>((*iter).first, 
@@ -104,19 +105,19 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
           rng.uniform(0, 255))));
     }
 
-
-    std::cout << "Label " << (*iter).first << std::endl;
-    auto comp = (*iter).second;
-    ComputeGravity compute_g(cv_ptr->image);
-    comp->for_each_vertex(compute_g);
-    compute_g.drawBaryCenter();
-
-    
     cv::Scalar color = labelToColor.find(iter->first)->second;
-    display_e.setColor(color);
-    display_v.setColor(color);
-    comp->for_each_vertex(display_v);
-    comp->for_each_edge(display_e);
+    edgeLooper.setEdgeColor(color);
+    vertexLooper.setVertexColor(color);
+
+    auto comp = (*iter).second;
+
+    comp->for_each_vertex(vertexLooper);
+    comp->for_each_edge(edgeLooper);
+
+    vertexLooper.drawBaryCenter();
+
+    if (DEBUG) ROS_INFO("Label %d, Deviation %f", (*iter).first, vertexLooper.getDeviation());
+
   }
 
 

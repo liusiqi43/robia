@@ -90,66 +90,73 @@ public:
 
 
 
-	// functor
-	class DisplayEdge {
-		cv::Mat& rImage;
-		cv::Scalar color;
-	public:
-		DisplayEdge(cv::Mat &img) : rImage(img) {}
+// functor
+class EdgeLooper {
+	cv::Mat& rImage;
+	cv::Scalar color;
+public:
+	EdgeLooper(cv::Mat &img) : rImage(img) {}
 
-		bool operator()(Edge& e) {
-			cv::Point2d A = (*(e.n1)).value.prototype();
-			cv::Point2d B = (*(e.n2)).value.prototype();
+	bool operator()(Edge& e) {
+		cv::Point2d A = (*(e.n1)).value.prototype();
+		cv::Point2d B = (*(e.n2)).value.prototype();
 
-			cv::line(rImage, A, B, color, 2);
+		cv::line(rImage, A, B, color, 2);
 
-	    	return false; // the element should not be removed.
-	    }
+    	return false; // the element should not be removed.
+    }
 
-	    void setColor(const cv::Scalar& c) {color = c;}
-	};
-
-	// This is a loop functor class.
-	class DisplayVertex {
-	   cv::Mat&  rImage; // Référence sur l'image opencv
-	   cv::Scalar color;
-	public:
-		DisplayVertex(cv::Mat &img) : rImage(img) {}
-
-		bool operator()(Vertex& n) { 
-			cv::Point2d A = n.value.prototype();
-
-			cv::circle(rImage, A, 3, color, 2);
-		    return false; // The element should not be removed.
-		}
-
-		void setColor(const cv::Scalar& c) {color = c;}	
+    void setEdgeColor(const cv::Scalar& c) {color = c;}
 };
 
+class VertexLooper {
+	cv::Mat&  rImage; // Référence sur l'image opencv
 
-// This is a loop functor class.
-class ComputeGravity {
-private:
+	// Gravity
 	cv::Point2d G;
 	unsigned int nb;
-  cv::Mat&  rImage; // Référence sur l'image opencv
+
+	// Display Vertex
+	cv::Scalar color;
+
+	// Calculate deviation
+	double cumulatedDeviation;
+
 public:
-	ComputeGravity(cv::Mat &img) : G(cv::Point2d(0.,0.)), nb(0), rImage(img) {}
+	VertexLooper(cv::Mat &img) : 
+		rImage(img), G(0.,0.), nb(0), cumulatedDeviation(0)
+		{}
 
 	bool operator()(Vertex& n) { 
+		// Draw Vertex
 		cv::Point2d pt = n.value.prototype();
+		cv::circle(rImage, pt, 3, color, 2);
+
+		// Cumulates Gravity
 		G.x += pt.x; 
 		G.y += pt.y;
 		++nb;
-		return false;
+
+		// Calculate deviation
+		cv::Point2d bc = getBaryCenter();
+		cumulatedDeviation += std::sqrt(std::pow(bc.x - pt.x, 2) + std::pow(bc.y - pt.y, 2));
+	    return false; // The element should not be removed.
 	}
 
-	cv::Point2d baryCenter(void) {
+	// Display Vertex
+	void setVertexColor(const cv::Scalar& c) {color = c;}	
+
+	// Calculate Gravity
+	cv::Point2d getBaryCenter() {
 		return cv::Point2d(G.x/nb, G.y/nb);
 	}
 
+	double getDeviation() {
+		return cumulatedDeviation;
+	}
+
 	void drawBaryCenter() {
-		cv::circle(rImage, this->baryCenter(), 3, CV_RGB(255, 255, 0), -1);
+		cv::circle(rImage, this->getBaryCenter(), 3, CV_RGB(255, 255, 0), -1);
 	}
 };
 
