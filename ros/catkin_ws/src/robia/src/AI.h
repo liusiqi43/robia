@@ -60,11 +60,14 @@ public:
 	};
 	typedef vq2::unit::Learn<Unit,Learn> UnitLearn;
 
-	#define TARGET      2e-4
+	#define TARGET      2e-8
 	class Params {
-	public:
-	  int nb_samples;
 
+	public:
+		int nb_samples;
+
+		Params() : nb_samples(0) {}
+	  
 	  // GNG-T
 		int ageMax(void)           {return 20;}
 		double learningRate(void)  {return .001;}
@@ -78,6 +81,8 @@ public:
 		double lowPassCoef(void)   {return .4;}
 		double delta(void)         {return .75;}
 		double margin(void)        {return .2;}
+
+		void setNbSamples(int sample) {nb_samples = sample; }
 	}; 
 	typedef vq2::by_default::gngt::Evolution<Params> Evolution;
 
@@ -114,6 +119,33 @@ class DisplayVertex {
 
 	    return false; // The element should not be removed.
 	}
+};
+
+
+// This is a loop functor class.
+class ComputeGravity {
+private:
+  cv::Point2d G;
+  unsigned int nb;
+  cv::Mat&  rImage; // Référence sur l'image opencv
+public:
+  ComputeGravity(cv::Mat &img) : G(cv::Point2d(0.,0.)), nb(0), rImage(img) {}
+
+  bool operator()(Vertex& n) { 
+    cv::Point2d pt = n.value.prototype();
+    G.x += pt.x; 
+    G.y += pt.y;
+    ++nb;
+    return false;
+  }
+  
+  cv::Point2d baryCenter(void) {
+  	return cv::Point2d(G.x/nb, G.y/nb);
+  }
+  
+  void drawBaryCenter() {
+  	cv::circle(rImage, this->baryCenter(), 3, CV_RGB(255, 255, 0), -1);
+  }
 };
 
 private:

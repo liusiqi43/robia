@@ -13,12 +13,12 @@
 #include <opencv2/highgui/highgui.hpp> // ROS>>>CV cv>>ROS
 
 AI::AI() : DESIRED_SAMPLE_SIZE(100), 
-	   NB_EPOCHS_PER_FRAME(10), 
-	   unit_distance(distance),
-	   unit_learn(learn),
-	   evolution(params),
-	   gngt_input(), 
-     DEBUG(true)
+NB_EPOCHS_PER_FRAME(10), 
+unit_distance(distance),
+unit_learn(learn),
+evolution(params),
+gngt_input(), 
+DEBUG(true)
 {
 
   dyeFilter = new GR::DyeFilter(1., 0.5, 50);
@@ -34,7 +34,7 @@ AI::AI() : DESIRED_SAMPLE_SIZE(100),
  int askFileTypeBox=1; //-1 is show box of codec  
  int Color = 1;  
  cv::Size S = cv::Size( 320, 240 );  
-  
+
  //make output video file  
  if (DEBUG) mOutVideo.open("../output.avi", CV_FOURCC('P','I','M','1'), 24, S, Color);  
 }
@@ -61,32 +61,49 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
 
 
 
+  cv::Size imageSize =  cv_ptr->image.size();
   dyeFilter->process(cv_ptr->image, cv_ptr->image, gngt_input);
 
   for(int e = 0; e < NB_EPOCHS_PER_FRAME; ++e) {
     std::random_shuffle(gngt_input.begin(),gngt_input.end()); // Important !!!!
     auto begin = gngt_input.begin();
     int vecsize = gngt_input.size()-1;
+
     int sampleSize = std::min(DESIRED_SAMPLE_SIZE, vecsize);
+    int nbSample = imageSize.height * imageSize.width * sampleSize / vecsize;
+    params.setNbSamples(nbSample);
+
     auto end   = gngt_input.begin()+sampleSize; 
 
     vq2::algo::gngt::open_epoch(graph,evolution);
     for(auto iter = begin; iter != end; ++iter)
       vq2::algo::gngt::submit(params,graph,
-			      unit_distance,unit_learn,
-			      *iter,true);
+       unit_distance,unit_learn,
+       *iter,true);
     vq2::algo::gngt::close_epoch(params,graph,
-				 unit_learn,
-				 evolution,true);
+     unit_learn,
+     evolution,true);
   }
 
 
   DisplayVertex display_v(cv_ptr->image);
   DisplayEdge display_e(cv_ptr->image);
 
-
   graph.for_each_vertex(display_v);
   graph.for_each_edge(display_e);
+
+  // Composantes connexes
+  std::map<unsigned int,Graph::Component*> components;
+  graph.computeConnectedComponents(components,false);
+
+  for(auto iter = components.begin();iter != components.end();++iter) {
+    std::cout << "Label " << (*iter).first << std::endl;
+    auto comp = (*iter).second;
+    ComputeGravity compute_g(cv_ptr->image);
+    comp->for_each_vertex(compute_g);
+    compute_g.drawBaryCenter();
+  }
+
 
   // Processing ends here
 
@@ -109,7 +126,7 @@ int main(int argc, char *argv[])
   ros::NodeHandle n;
 
   AI ai;
-	
+
   ros::spin();
 
   return 0;
