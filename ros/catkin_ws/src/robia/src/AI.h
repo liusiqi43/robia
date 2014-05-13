@@ -130,4 +130,5 @@ private:
 	Graph		     graph;
 
 	cv::VideoWriter mOutVideo;
+	const bool DEBUG;
 };

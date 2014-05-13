@@ -17,7 +17,8 @@ AI::AI() : DESIRED_SAMPLE_SIZE(100),
 	   unit_distance(distance),
 	   unit_learn(learn),
 	   evolution(params),
-	   gngt_input()
+	   gngt_input(), 
+     DEBUG(true)
 {
 
   dyeFilter = new GR::DyeFilter(1., 0.5, 50);
@@ -35,7 +36,7 @@ AI::AI() : DESIRED_SAMPLE_SIZE(100),
  cv::Size S = cv::Size( 320, 240 );  
   
  //make output video file  
- mOutVideo.open("~/output.avi", CV_FOURCC('P','I','M','1'), 24, S, Color);  
+ if (DEBUG) mOutVideo.open("../output.avi", CV_FOURCC('P','I','M','1'), 24, S, Color);  
 }
 
 AI::~AI() {
@@ -92,7 +93,8 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   // Publish processed image
 
   pubImageFiltrer.publish(cv_ptr->toImageMsg());
-  mOutVideo << cv_ptr->image;
+
+  if (DEBUG) mOutVideo << cv_ptr->image;
   // ROS_INFO("AI::imageCallBack published imageMsg");
   cv::waitKey(3);
 }
