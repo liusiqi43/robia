@@ -1,1 +1,0 @@
-/usr/bin/c++   -O3 -DNDEBUG    -Wl,--no-as-needed   -L/home/siqi/Documents/robia/robia/vq2-1.33/build/src CMakeFiles/example-002-003-distance.dir/example-002-003-distance.cc.o  -o example-002-003-distance -rdynamic 

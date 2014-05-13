@@ -1,7 +1,0 @@
-
-Name: vq2
-Description: Fast VQ
-Version: 1.33
-Requires: 
-Libs: -L/usr/lib  -Wl,--no-as-needed 
-Cflags: -I/usr/include/vq2 -std=c++0x

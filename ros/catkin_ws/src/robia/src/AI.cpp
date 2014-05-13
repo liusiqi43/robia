@@ -27,6 +27,15 @@ AI::AI() : DESIRED_SAMPLE_SIZE(100),
   pubImageFiltrer = it.advertise("/robia/gngt_output", 50);
   sub = it.subscribe("/ardrone/front/image_raw", 1, &AI::imageCallBack, this);
   ROS_INFO("AI constructed");
+
+
+  //Set properties  
+ int askFileTypeBox=0; //-1 is show box of codec  
+ int Color = 1;  
+ cv::Size S = cv::Size( 320, 240 );  
+  
+ //make output video file  
+ this->mOutVideo.open("/home/siqi/Documents/robia/output.avi", askFileTypeBox, 15, S, Color);  
 }
 
 AI::~AI() {
@@ -81,7 +90,9 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   // Processing ends here
 
   // Publish processed image
+
   pubImageFiltrer.publish(cv_ptr->toImageMsg());
+  mOutVideo << cv_ptr->image;
   // ROS_INFO("AI::imageCallBack published imageMsg");
   cv::waitKey(3);
 }

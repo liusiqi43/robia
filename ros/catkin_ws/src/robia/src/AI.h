@@ -128,4 +128,6 @@ private:
 	Evolution        evolution;
 	std::vector<cv::Point2d> gngt_input;
 	Graph		     graph;
+
+	cv::VideoWriter mOutVideo;
 };

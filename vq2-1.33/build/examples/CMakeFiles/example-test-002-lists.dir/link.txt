@@ -1,1 +1,0 @@
-/usr/bin/c++   -O3 -DNDEBUG    -Wl,--no-as-needed   -L/home/siqi/Documents/robia/robia/vq2-1.33/build/src CMakeFiles/example-test-002-lists.dir/example-test-002-lists.cc.o  -o example-test-002-lists -rdynamic 

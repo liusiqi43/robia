@@ -1,1 +1,0 @@
-/usr/bin/c++   -O3 -DNDEBUG    -Wl,--no-as-needed   -L/home/siqi/Documents/robia/robia/vq2-1.33/build/src CMakeFiles/example-004-003-gngt.dir/example-004-003-gngt.cc.o  -o example-004-003-gngt -rdynamic 

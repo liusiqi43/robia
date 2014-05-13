@@ -18,3 +18,4 @@ tracker/src/Makefile
 tracker/src/cmake_install.cmake
 vq2-1.33/examples
 handDetection/
+build/
