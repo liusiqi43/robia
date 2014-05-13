@@ -67,7 +67,7 @@ public:
 		int nb_samples;
 
 		Params() : nb_samples(0) {}
-	  
+
 	  // GNG-T
 		int ageMax(void)           {return 20;}
 		double learningRate(void)  {return .001;}
@@ -93,6 +93,7 @@ public:
 	// functor
 	class DisplayEdge {
 		cv::Mat& rImage;
+		cv::Scalar color;
 	public:
 		DisplayEdge(cv::Mat &img) : rImage(img) {}
 
@@ -100,52 +101,56 @@ public:
 			cv::Point2d A = (*(e.n1)).value.prototype();
 			cv::Point2d B = (*(e.n2)).value.prototype();
 
-			cv::line(rImage, A, B, CV_RGB(255, 255, 255));
+			cv::line(rImage, A, B, color, 2);
 
-	    return false; // the element should not be removed.
-	}
-};
+	    	return false; // the element should not be removed.
+	    }
+
+	    void setColor(const cv::Scalar& c) {color = c;}
+	};
 
 	// This is a loop functor class.
-class DisplayVertex {
+	class DisplayVertex {
 	   cv::Mat&  rImage; // Référence sur l'image opencv
+	   cv::Scalar color;
 	public:
 		DisplayVertex(cv::Mat &img) : rImage(img) {}
 
 		bool operator()(Vertex& n) { 
 			cv::Point2d A = n.value.prototype();
 
-			cv::circle(rImage, A, 3, CV_RGB(255, 0, 0));
+			cv::circle(rImage, A, 3, color, 2);
+		    return false; // The element should not be removed.
+		}
 
-	    return false; // The element should not be removed.
-	}
+		void setColor(const cv::Scalar& c) {color = c;}	
 };
 
 
 // This is a loop functor class.
 class ComputeGravity {
 private:
-  cv::Point2d G;
-  unsigned int nb;
+	cv::Point2d G;
+	unsigned int nb;
   cv::Mat&  rImage; // Référence sur l'image opencv
 public:
-  ComputeGravity(cv::Mat &img) : G(cv::Point2d(0.,0.)), nb(0), rImage(img) {}
+	ComputeGravity(cv::Mat &img) : G(cv::Point2d(0.,0.)), nb(0), rImage(img) {}
 
-  bool operator()(Vertex& n) { 
-    cv::Point2d pt = n.value.prototype();
-    G.x += pt.x; 
-    G.y += pt.y;
-    ++nb;
-    return false;
-  }
-  
-  cv::Point2d baryCenter(void) {
-  	return cv::Point2d(G.x/nb, G.y/nb);
-  }
-  
-  void drawBaryCenter() {
-  	cv::circle(rImage, this->baryCenter(), 3, CV_RGB(255, 255, 0), -1);
-  }
+	bool operator()(Vertex& n) { 
+		cv::Point2d pt = n.value.prototype();
+		G.x += pt.x; 
+		G.y += pt.y;
+		++nb;
+		return false;
+	}
+
+	cv::Point2d baryCenter(void) {
+		return cv::Point2d(G.x/nb, G.y/nb);
+	}
+
+	void drawBaryCenter() {
+		cv::circle(rImage, this->baryCenter(), 3, CV_RGB(255, 255, 0), -1);
+	}
 };
 
 private:
@@ -161,6 +166,10 @@ private:
 	std::vector<cv::Point2d> gngt_input;
 	Graph		     graph;
 
+	std::map<unsigned int, cv::Scalar> labelToColor;
+	cv::RNG rng;
+
 	cv::VideoWriter mOutVideo;
+
 	const bool DEBUG;
 };

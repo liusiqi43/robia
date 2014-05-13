@@ -18,7 +18,9 @@ unit_distance(distance),
 unit_learn(learn),
 evolution(params),
 gngt_input(), 
-DEBUG(true)
+labelToColor(),
+DEBUG(true),
+rng(12345)
 {
 
   dyeFilter = new GR::DyeFilter(1., 0.5, 50);
@@ -89,19 +91,32 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   DisplayVertex display_v(cv_ptr->image);
   DisplayEdge display_e(cv_ptr->image);
 
-  graph.for_each_vertex(display_v);
-  graph.for_each_edge(display_e);
-
   // Composantes connexes
   std::map<unsigned int,Graph::Component*> components;
   graph.computeConnectedComponents(components,false);
 
   for(auto iter = components.begin();iter != components.end();++iter) {
+    if (labelToColor.find((*iter).first) == labelToColor.end()) {
+      // new label
+      labelToColor.insert(std::pair<unsigned int, cv::Scalar>((*iter).first, 
+        cv::Scalar(rng.uniform(0,255), 
+          rng.uniform(0, 255), 
+          rng.uniform(0, 255))));
+    }
+
+
     std::cout << "Label " << (*iter).first << std::endl;
     auto comp = (*iter).second;
     ComputeGravity compute_g(cv_ptr->image);
     comp->for_each_vertex(compute_g);
     compute_g.drawBaryCenter();
+
+    
+    cv::Scalar color = labelToColor.find(iter->first)->second;
+    display_e.setColor(color);
+    display_v.setColor(color);
+    comp->for_each_vertex(display_v);
+    comp->for_each_edge(display_e);
   }
 
 
