@@ -60,7 +60,7 @@ public:
 	};
 	typedef vq2::unit::Learn<Unit,Learn> UnitLearn;
 
-	#define TARGET      2e-8
+	#define TARGET      0.1
 	class Params {
 
 	public:
@@ -70,7 +70,7 @@ public:
 
 	  // GNG-T
 		int ageMax(void)           {return 20;}
-		double learningRate(void)  {return .001;}
+		double learningRate(void)  {return .01;}
 		double learningRatio(void) {return .2;}
 		double lambda(void)        {return .001;}
 		double infinity(void)      {return 1e12;}
@@ -89,6 +89,44 @@ public:
 	const cv::Point2d& sample_of(const cv::Point2d& p) {return p;}
 
 
+// This class invalidates long edges. This is a for_each_edge functor.
+#define MAX_VALID_DISTANCE 20
+#define MAX_VALID_SQUARED_DISTANCE (MAX_VALID_DISTANCE*MAX_VALID_DISTANCE)
+class InvalidateLongEdge {
+public:
+  bool operator()(Graph::edge_type& e) { 
+    Similarity squared_dist;
+    cv::Point2d& A = (*(e.n1)).value.prototype(); // This is the way to retrieve the weight
+    cv::Point2d& B = (*(e.n2)).value.prototype();
+    e.stuff.efficient = squared_dist(A,B) < MAX_VALID_SQUARED_DISTANCE;
+    return false; // We invalidate, but we keep the edge.
+  }
+};
+
+// This tells whether some valid edges exist.
+class IsThereValidEdges {
+public:
+  bool is_any_valid;
+
+  IsThereValidEdges(void) : is_any_valid(false) {}
+  bool operator()(Graph::edge_type& e) { 
+    is_any_valid = is_any_valid || e.stuff.efficient;
+    return false;
+  }
+};
+
+// This invalidates a vertex if all its edges are invalid.
+class InvalidateNoisyVertex {
+public:
+  bool is_any_valid;
+
+  bool operator()(Graph::vertex_type& v) { 
+    IsThereValidEdges search;
+    v.for_each_edge(search);
+    v.stuff.efficient = search.is_any_valid;
+    return false;
+  }
+};
 
 // functor
 class EdgeLooper {
@@ -100,9 +138,11 @@ public:
 	bool operator()(Edge& e) {
 		cv::Point2d A = (*(e.n1)).value.prototype();
 		cv::Point2d B = (*(e.n2)).value.prototype();
-
-		cv::line(rImage, A, B, color, 2);
-
+		if (e.stuff.efficient)
+			cv::line(rImage, A, B, color, 2);
+		else{
+			cv::line(rImage, A, B, cv::Scalar(200,200,200), 2);
+		}
     	return false; // the element should not be removed.
     }
 

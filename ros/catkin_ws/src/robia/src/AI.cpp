@@ -12,7 +12,7 @@
 #include <opencv2/imgproc/imgproc.hpp> // ROS>>>CV cv>>ROS
 #include <opencv2/highgui/highgui.hpp> // ROS>>>CV cv>>ROS
 
-AI::AI() : DESIRED_SAMPLE_SIZE(100), 
+AI::AI() : DESIRED_SAMPLE_SIZE(2000), 
 NB_EPOCHS_PER_FRAME(10), 
 unit_distance(distance),
 unit_learn(learn),
@@ -87,11 +87,16 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
      evolution,true);
   }
 
-
+  // First, we invalidate long edges. 
+  InvalidateLongEdge invalidate_long_edge;
+  graph.for_each_edge(invalidate_long_edge);
+  // Second, we invalidate any vertex that owns only invalid edges.
+  InvalidateNoisyVertex invalid_noisy_vertex;
+  graph.for_each_vertex(invalid_noisy_vertex);
 
   // Composantes connexes
   std::map<unsigned int, Graph::Component*> components;
-  graph.computeConnectedComponents(components,false);
+  graph.computeConnectedComponents(components, true);
 
   for(auto iter = components.begin();iter != components.end();++iter) {
     VertexLooper vertexLooper(cv_ptr->image);
@@ -116,7 +121,7 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
 
     vertexLooper.drawBaryCenter();
 
-    if (DEBUG) ROS_INFO("Label %d, Deviation %f", (*iter).first, vertexLooper.getDeviation());
+    // if (DEBUG) ROS_INFO("Label %d, Deviation %f", (*iter).first, vertexLooper.getDeviation());
 
   }
 
