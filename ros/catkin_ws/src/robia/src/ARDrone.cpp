@@ -41,57 +41,91 @@ void ARDrone::reset() {
 }
 
 void ARDrone::moveForward() {
-	geometry_msgs::Twist cmd_msg;
-    cmd_msg.linear.x = TWIST_LINEAR;
+	moveForward(TWIST_LINEAR);   
+}
+
+void ARDrone::moveForward(double vel) {
+    geometry_msgs::Twist cmd_msg;
+    cmd_msg.linear.x = vel;
     this->pubMove.publish(cmd_msg);
-    ROS_INFO("Moving forward");      
+    ROS_INFO("Moving forward at %f", vel);      
 }
 
 void ARDrone::moveBackward() {
-	geometry_msgs::Twist cmd_msg;
-    cmd_msg.linear.x = -TWIST_LINEAR;
+	 moveBackward(TWIST_LINEAR);
+}
+
+void ARDrone::moveBackward(double vel) {
+    geometry_msgs::Twist cmd_msg;
+    cmd_msg.linear.x = -vel;
     this->pubMove.publish(cmd_msg);
-    ROS_INFO("Moving backward");      
+    ROS_INFO("Moving backward");           
 }
 
 void ARDrone::moveLeft() {
+    moveLeft(TWIST_LINEAR);      
+}
+
+void ARDrone::moveLeft(double vel) {
 	geometry_msgs::Twist cmd_msg;
-    cmd_msg.linear.y = TWIST_LINEAR;
+    cmd_msg.linear.y = vel;
     this->pubMove.publish(cmd_msg);
     ROS_INFO("Moving left");      
 }
 
 void ARDrone::moveRight() {
-	geometry_msgs::Twist cmd_msg;
-    cmd_msg.linear.y = -TWIST_LINEAR;
+    moveRight(TWIST_LINEAR);
+}
+
+void ARDrone::moveRight(double vel) {
+    geometry_msgs::Twist cmd_msg;
+    cmd_msg.linear.y = -vel;
     this->pubMove.publish(cmd_msg);
     ROS_INFO("Moving right");      
 }
 
+
 void ARDrone::moveUp() {
+    moveUp(TWIST_LINEAR);
+}
+
+void ARDrone::moveUp(double vel) {
 	geometry_msgs::Twist cmd_msg;
-    cmd_msg.linear.z = TWIST_LINEAR;
+    cmd_msg.linear.z = vel;
     this->pubMove.publish(cmd_msg);
     ROS_INFO("Moving up");      
 }
 
 void ARDrone::moveDown() {
+    moveDown(TWIST_LINEAR);
+}
+
+void ARDrone::moveDown(double vel) {
 	geometry_msgs::Twist cmd_msg;
-    cmd_msg.linear.z = -TWIST_LINEAR;
+    cmd_msg.linear.z = -vel;
     this->pubMove.publish(cmd_msg);
     ROS_INFO("Moving down");      
 }
 
+
 void ARDrone::rotateLeft() {
+    rotateLeft(TWIST_LINEAR);
+}
+
+void ARDrone::rotateRight() {
+    rotateRight(TWIST_LINEAR);
+}
+
+void ARDrone::rotateLeft(double vel) {
 	geometry_msgs::Twist cmd_msg;
-    cmd_msg.angular.z = -TWIST_LINEAR;
+    cmd_msg.angular.z = -vel;
     this->pubMove.publish(cmd_msg);
     ROS_INFO("Rotate left");
 }
 
-void ARDrone::rotateRight() {
+void ARDrone::rotateRight(double vel) {
 	geometry_msgs::Twist cmd_msg;
-    cmd_msg.angular.z = TWIST_LINEAR;
+    cmd_msg.angular.z = vel;
     this->pubMove.publish(cmd_msg);
     ROS_INFO("Rotate right");
 }

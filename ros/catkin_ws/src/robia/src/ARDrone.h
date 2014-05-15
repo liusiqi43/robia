@@ -27,8 +27,18 @@ public:
 	void moveUp();
 	void moveDown();
 
+	void moveForward(double vel);
+	void moveBackward(double vel);
+	void moveLeft(double vel);
+	void moveRight(double vel);
+	void moveUp(double vel);
+	void moveDown(double vel);
+
 	void hover();
 
+	void rotateLeft(double vel);
+	void rotateRight(double vel);
+	
 	void rotateLeft();
 	void rotateRight();
 
