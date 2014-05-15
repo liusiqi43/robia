@@ -1,6 +1,7 @@
 #include "ros/ros.h"
 #include "dyeFilter.h"
 #include "AI.h"
+#include <robia/points_tuple.h>
 
 #include <opencv2/opencv.hpp> // cv::Point2d, cv::
 #include <algorithm> // random_shuffle
@@ -11,6 +12,12 @@
 #include <sensor_msgs/image_encodings.h> // ROS>>>CV cv>>ROS
 #include <opencv2/imgproc/imgproc.hpp> // ROS>>>CV cv>>ROS
 #include <opencv2/highgui/highgui.hpp> // ROS>>>CV cv>>ROS
+
+
+#define LengthOfCamera 320
+#define HeightOfCamera 240
+#define MIN_VALID_COMPONENT_DEVIATION 3
+
 
 AI::AI() : DESIRED_SAMPLE_SIZE(2000), 
 NB_EPOCHS_PER_FRAME(10), 
@@ -28,6 +35,11 @@ rng(12345)
   ros::NodeHandle n;
   image_transport::ImageTransport it(n);
   pubImageFiltrer = it.advertise("/robia/gngt_output", 50);
+  pubThreePointsPositions = n.advertise<robia::points_tuple>("/robia/output_positions", 50);
+
+  //on publie les messages contenant les coordonnées des 3 points sur un topic 
+
+
   sub = it.subscribe("/ardrone/front/image_raw", 1, &AI::imageCallBack, this);
   ROS_INFO("AI constructed");
 
@@ -97,6 +109,10 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   // Composantes connexes
   std::map<unsigned int, Graph::Component*> components;
   graph.computeConnectedComponents(components, true);
+  // Create pair <Deviation,Point,CompareWithDeviation>
+  std::priority_queue< std::pair<double, cv::Point2d>, 
+                          std::vector<std::pair<double, cv::Point2d> >, 
+                          CompareComponentsWithDeviation> largestThreeComponentQueue;
 
   for(auto iter = components.begin();iter != components.end();++iter) {
     VertexLooper vertexLooper(cv_ptr->image);
@@ -120,16 +136,39 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
     comp->for_each_edge(edgeLooper);
 
     vertexLooper.drawBaryCenter();
+    vertexLooper.getDeviation();
 
-    // if (DEBUG) ROS_INFO("Label %d, Deviation %f", (*iter).first, vertexLooper.getDeviation());
+    if (vertexLooper.getDeviation() >= MIN_VALID_COMPONENT_DEVIATION) {
+      if (largestThreeComponentQueue.size() < 3) {
+        largestThreeComponentQueue.push(
+                std::make_pair(
+                  vertexLooper.getDeviation(), 
+                  vertexLooper.getBaryCenter()
+                  )
+                );
+      } else {
+        if(largestThreeComponentQueue.top().first < vertexLooper.getDeviation()) {
+          largestThreeComponentQueue.pop();
+          largestThreeComponentQueue.push(
+                std::make_pair(
+                  vertexLooper.getDeviation(), 
+                  vertexLooper.getBaryCenter()
+                  )
+                );
+        }
+      }
+    } 
+
+    //if (DEBUG) ROS_INFO("Label %d, Deviation %f", (*iter).first, vertexLooper.getDeviation());
 
   }
 
-
   // Processing ends here
 
+  // Publish barycenters for three major components
+  if (largestThreeComponentQueue.size() == 3)
+    publishThreeComponentRHL(largestThreeComponentQueue);
   // Publish processed image
-
   pubImageFiltrer.publish(cv_ptr->toImageMsg());
 
   if (DEBUG) mOutVideo << cv_ptr->image;
@@ -137,7 +176,38 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   cv::waitKey(3);
 }
 
+bool comparePointsWithRespectToX (const cv::Point2d &a, const cv::Point2d &b) { return (a.x < b.x); }
 
+void AI::publishThreeComponentRHL(std::priority_queue < std::pair<double, cv::Point2d>, 
+    std::vector<std::pair<double, cv::Point2d> >, 
+    AI::CompareComponentsWithDeviation> largestThreeComponentQueue) {
+
+    std::vector<cv::Point2d> largestThreeComponentVector;
+
+    while(!largestThreeComponentQueue.empty()) {
+      largestThreeComponentVector.push_back(largestThreeComponentQueue.top().second);
+      largestThreeComponentQueue.pop();
+    }
+
+    std::sort(largestThreeComponentVector.begin(), largestThreeComponentVector.end(), comparePointsWithRespectToX);
+
+    //create message
+    robia::points_tuple message;
+
+    int s = largestThreeComponentVector.size();
+
+    // Left Hand, Head, Right hand
+    message.Rx = largestThreeComponentVector[0].x/LengthOfCamera;
+    message.Ry = largestThreeComponentVector[0].y/HeightOfCamera;
+    message.Hx = largestThreeComponentVector[1].x/LengthOfCamera;
+    message.Hy = largestThreeComponentVector[1].y/HeightOfCamera;
+    message.Lx = largestThreeComponentVector[2].x/LengthOfCamera;
+    message.Ly = largestThreeComponentVector[2].y/HeightOfCamera;
+
+    // Publish three points to ROSTopic 
+    pubThreePointsPositions.publish(message);
+
+  }
 
 
 int main(int argc, char *argv[])

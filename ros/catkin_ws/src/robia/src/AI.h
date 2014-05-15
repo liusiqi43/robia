@@ -24,6 +24,15 @@ class AI
 {
 
 public:
+	//compare with the first parameter, the Deviation
+    struct CompareComponentsWithDeviation
+    {
+      bool operator()(const std::pair<double, cv::Point2d>& lhs, const std::pair<double, cv::Point2d>& rhs) const
+      {
+       return lhs.first < rhs.first;
+      }
+    };
+
 	const int DESIRED_SAMPLE_SIZE;
 	const int NB_EPOCHS_PER_FRAME;
 
@@ -31,6 +40,9 @@ public:
 	~AI();
 
 	void imageCallBack(const sensor_msgs::ImageConstPtr& msg);
+	void publishThreeComponentRHL(std::priority_queue < std::pair<double, cv::Point2d>, 
+								    std::vector<std::pair<double, cv::Point2d> >, 
+								    CompareComponentsWithDeviation> largestThreeComponentQueue);
 
 	class Similarity {
 	public:
@@ -46,7 +58,6 @@ public:
 	};
 	typedef vq2::unit::Similarity<Unit,Similarity> UnitSimilarity;
 
-	// Comprend pas. ?????????????????????? coef sert a quoi?
 	class Learn {
 	public:
 		typedef cv::Point2d sample_type;
@@ -150,6 +161,8 @@ public:
 };
 
 class VertexLooper {
+
+
 	cv::Mat&  rImage; // Référence sur l'image opencv
 
 	// Gravity
@@ -163,6 +176,7 @@ class VertexLooper {
 	double cumulatedDeviation;
 
 public:
+
 	VertexLooper(cv::Mat &img) : 
 		rImage(img), G(0.,0.), nb(0), cumulatedDeviation(0)
 		{}
@@ -198,12 +212,19 @@ public:
 	void drawBaryCenter() {
 		cv::circle(rImage, this->getBaryCenter(), 3, CV_RGB(255, 255, 0), -1);
 	}
+
+
 };
+
+  	
+
 
 private:
 	GR::DyeFilter *dyeFilter;
 	image_transport::Publisher pubImageFiltrer;
 	image_transport::Subscriber sub;
+	ros::Publisher pubThreePointsPositions;
+
 	Params           params;
 	Similarity       distance;
 	UnitSimilarity   unit_distance;
@@ -219,4 +240,6 @@ private:
 	cv::VideoWriter mOutVideo;
 
 	const bool DEBUG;
+
+
 };

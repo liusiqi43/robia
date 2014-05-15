@@ -2,5 +2,6 @@
   <node name="ardrone_driver" pkg="ardrone_autonomy" type="ardrone_driver" output="screen"/>
   <node name="keyboard_cmd" pkg="robia" type="keyboard_cmd" output="screen"/>
   <node name="AI" pkg="robia" type="AI" output="screen"/>
+  <node name="Control" pkg="robia" type="Control" output="screen"/>
 </launch>
 
