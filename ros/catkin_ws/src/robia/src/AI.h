@@ -46,7 +46,6 @@ public:
 	};
 	typedef vq2::unit::Similarity<Unit,Similarity> UnitSimilarity;
 
-	// Comprend pas. ?????????????????????? coef sert a quoi?
 	class Learn {
 	public:
 		typedef cv::Point2d sample_type;
@@ -150,6 +149,8 @@ public:
 };
 
 class VertexLooper {
+
+
 	cv::Mat&  rImage; // Référence sur l'image opencv
 
 	// Gravity
@@ -163,6 +164,7 @@ class VertexLooper {
 	double cumulatedDeviation;
 
 public:
+
 	VertexLooper(cv::Mat &img) : 
 		rImage(img), G(0.,0.), nb(0), cumulatedDeviation(0)
 		{}
@@ -198,7 +200,21 @@ public:
 	void drawBaryCenter() {
 		cv::circle(rImage, this->getBaryCenter(), 3, CV_RGB(255, 255, 0), -1);
 	}
+
+
 };
+
+
+    //compare with the first parameter, the Deviation
+
+    struct Compare
+    {
+      bool operator()(const std::pair<double, cv::Point2d &>& lhs, const std::pair<double, cv::Point2d &>& rhs) const
+      {
+       return lhs.first< rhs.first;
+      }
+    };
+
 
 private:
 	GR::DyeFilter *dyeFilter;

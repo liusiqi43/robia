@@ -12,6 +12,17 @@
 #include <opencv2/imgproc/imgproc.hpp> // ROS>>>CV cv>>ROS
 #include <opencv2/highgui/highgui.hpp> // ROS>>>CV cv>>ROS
 
+#include <algorithm> 
+
+#ifndef max
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#endif
+
+#ifndef min
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#endif
+
+
 AI::AI() : DESIRED_SAMPLE_SIZE(2000), 
 NB_EPOCHS_PER_FRAME(10), 
 unit_distance(distance),
@@ -97,6 +108,10 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   // Composantes connexes
   std::map<unsigned int, Graph::Component*> components;
   graph.computeConnectedComponents(components, true);
+  //create pair <Deviation,Point>
+  std::priority_queue std::priority_queue < std::pair<double, cv::Point2d &>, 
+                          std::vector<std::pair<double, cv::Point2d &> >, 
+                          Compare> largestThreeComponentQueue;
 
   for(auto iter = components.begin();iter != components.end();++iter) {
     VertexLooper vertexLooper(cv_ptr->image);
@@ -120,10 +135,50 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
     comp->for_each_edge(edgeLooper);
 
     vertexLooper.drawBaryCenter();
+    vertexLooper.getDeviation();
+
+    if (largestThreeComponentQueue.size()<3)
+    {
+      largestThreeComponentQueue.insert(
+              std::pair<double, cv::Point2d &>(
+                vertexLooper.getDeviation(), 
+                vertexLooper.getBaryCenter()
+                )
+              );
+    } else {
+      if(largestThreeComponentQueue.top().first < vertexLooper.getDeviation())
+      {
+        largestThreeComponentQueue.pop();
+        largestThreeComponentQueue.insert(std::pair<double, cv::Point2d &>.first);
+      }
+    }
 
     // if (DEBUG) ROS_INFO("Label %d, Deviation %f", (*iter).first, vertexLooper.getDeviation());
 
   }
+
+  void setThreeComponentRHL(std::priority_queue std::priority_queue < std::pair<double, cv::Point2d &>, 
+                          std::vector<std::pair<double, cv::Point2d &> >, 
+                          Compare> largestThreeComponentQueue)
+  {
+    cv::Point2d p1 = largestThreeComponentQueue.top().second;
+    largestThreeComponentQueue.pop();
+    cv::Point2d p2 = largestThreeComponentQueue.top().second;
+    largestThreeComponentQueue.pop();
+    cv::Point2d p3 = largestThreeComponentQueue.top().second;
+  
+    
+
+  }
+   
+
+    vertexLooper.getBaryCenter().x;
+    
+    #define Length 320;
+    #define Height 240;
+
+    q.second.x/Length;
+    q.second.y/Height;
 
 
   // Processing ends here
