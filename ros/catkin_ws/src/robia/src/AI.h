@@ -24,6 +24,15 @@ class AI
 {
 
 public:
+	//compare with the first parameter, the Deviation
+    struct CompareComponentsWithDeviation
+    {
+      bool operator()(const std::pair<double, cv::Point2d>& lhs, const std::pair<double, cv::Point2d>& rhs) const
+      {
+       return lhs.first < rhs.first;
+      }
+    };
+
 	const int DESIRED_SAMPLE_SIZE;
 	const int NB_EPOCHS_PER_FRAME;
 
@@ -31,6 +40,9 @@ public:
 	~AI();
 
 	void imageCallBack(const sensor_msgs::ImageConstPtr& msg);
+	void publishThreeComponentRHL(std::priority_queue < std::pair<double, cv::Point2d>, 
+								    std::vector<std::pair<double, cv::Point2d> >, 
+								    CompareComponentsWithDeviation> largestThreeComponentQueue);
 
 	class Similarity {
 	public:
@@ -204,22 +216,15 @@ public:
 
 };
 
-
-    //compare with the first parameter, the Deviation
-
-    struct Compare
-    {
-      bool operator()(const std::pair<double, cv::Point2d &>& lhs, const std::pair<double, cv::Point2d &>& rhs) const
-      {
-       return lhs.first< rhs.first;
-      }
-    };
+  	
 
 
 private:
 	GR::DyeFilter *dyeFilter;
 	image_transport::Publisher pubImageFiltrer;
 	image_transport::Subscriber sub;
+	ros::Publisher pubThreePointsPositions;
+
 	Params           params;
 	Similarity       distance;
 	UnitSimilarity   unit_distance;
@@ -235,4 +240,6 @@ private:
 	cv::VideoWriter mOutVideo;
 
 	const bool DEBUG;
+
+
 };

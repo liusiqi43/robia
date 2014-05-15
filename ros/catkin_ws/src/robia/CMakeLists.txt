@@ -51,10 +51,10 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg image_trans
 ##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
 
 ## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES #   Message1.msg
-#   Message2.msg
-# )
+ add_message_files(
+ FILES
+ points_tuple.msg
+ )
 
 ## Generate services in the 'srv' folder
 # add_service_files(
@@ -71,10 +71,10 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg image_trans
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs  # Or other packages containing msgs
-# )
+ generate_messages(
+   DEPENDENCIES
+   std_msgs  # Or other packages containing msgs
+ )
 
 ###################################
 ## catkin specific configuration ##
@@ -86,6 +86,7 @@ find_package(catkin REQUIRED COMPONENTS roscpp rospy std_msgs genmsg image_trans
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
+CATKIN_DEPENDS message_runtime
 #  INCLUDE_DIRS include
 #  LIBRARIES robia
 #  CATKIN_DEPENDS other_catkin_pkg
@@ -116,6 +117,13 @@ target_link_libraries(keyboard_cmd ${catkin_LIBRARIES})
 add_executable(AI src/AI.cpp src/dyeFilter.cpp)
 target_link_libraries(AI ${catkin_LIBRARIES})
 set_target_properties(AI PROPERTIES 
+  COMPILE_FLAGS "${VQ_CFLAGS}" 
+  LINK_FLAGS    "${VQ_LDFLAGS}"
+)
+
+add_executable(Control src/control.cpp src/ARDrone.cpp src/camera.cpp)
+target_link_libraries(Control ${catkin_LIBRARIES})
+set_target_properties(Control PROPERTIES 
   COMPILE_FLAGS "${VQ_CFLAGS}" 
   LINK_FLAGS    "${VQ_LDFLAGS}"
 )
