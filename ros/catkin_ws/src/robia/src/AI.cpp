@@ -166,8 +166,8 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   // Processing ends here
 
   // Publish barycenters for three major components
-  if (largestThreeComponentQueue.size() == 3)
-    publishThreeComponentRHL(largestThreeComponentQueue);
+  publishThreeComponentRHL(largestThreeComponentQueue);
+  
   // Publish processed image
   pubImageFiltrer.publish(cv_ptr->toImageMsg());
 
@@ -181,28 +181,36 @@ bool comparePointsWithRespectToX (const cv::Point2d &a, const cv::Point2d &b) { 
 void AI::publishThreeComponentRHL(std::priority_queue < std::pair<double, cv::Point2d>, 
     std::vector<std::pair<double, cv::Point2d> >, 
     AI::CompareComponentsWithDeviation> largestThreeComponentQueue) {
-
-    std::vector<cv::Point2d> largestThreeComponentVector;
-
-    while(!largestThreeComponentQueue.empty()) {
-      largestThreeComponentVector.push_back(largestThreeComponentQueue.top().second);
-      largestThreeComponentQueue.pop();
-    }
-
-    std::sort(largestThreeComponentVector.begin(), largestThreeComponentVector.end(), comparePointsWithRespectToX);
-
+    
     //create message
     robia::points_tuple message;
+    
+    if (largestThreeComponentQueue.size() != 3) {
+      // Left Hand, Head, Right hand
+      message.Rx = -1;
+      message.Ry = -1;
+      message.Hx = -1;
+      message.Hy = -1;
+      message.Lx = -1;
+      message.Ly = -1;
+    } else {    
+      std::vector<cv::Point2d> largestThreeComponentVector;
 
-    int s = largestThreeComponentVector.size();
+      while(!largestThreeComponentQueue.empty()) {
+        largestThreeComponentVector.push_back(largestThreeComponentQueue.top().second);
+        largestThreeComponentQueue.pop();
+      }
 
-    // Left Hand, Head, Right hand
-    message.Rx = largestThreeComponentVector[0].x/LengthOfCamera;
-    message.Ry = largestThreeComponentVector[0].y/HeightOfCamera;
-    message.Hx = largestThreeComponentVector[1].x/LengthOfCamera;
-    message.Hy = largestThreeComponentVector[1].y/HeightOfCamera;
-    message.Lx = largestThreeComponentVector[2].x/LengthOfCamera;
-    message.Ly = largestThreeComponentVector[2].y/HeightOfCamera;
+      std::sort(largestThreeComponentVector.begin(), largestThreeComponentVector.end(), comparePointsWithRespectToX);
+
+      // Left Hand, Head, Right hand
+      message.Rx = largestThreeComponentVector[0].x/LengthOfCamera;
+      message.Ry = largestThreeComponentVector[0].y/HeightOfCamera;
+      message.Hx = largestThreeComponentVector[1].x/LengthOfCamera;
+      message.Hy = largestThreeComponentVector[1].y/HeightOfCamera;
+      message.Lx = largestThreeComponentVector[2].x/LengthOfCamera;
+      message.Ly = largestThreeComponentVector[2].y/HeightOfCamera;
+    }
 
     // Publish three points to ROSTopic 
     pubThreePointsPositions.publish(message);

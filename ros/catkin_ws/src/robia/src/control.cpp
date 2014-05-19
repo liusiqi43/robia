@@ -25,22 +25,25 @@ void Control::centerWithRespectToBaryCenter() {
 	BARx = (1/3)*(Headx + Rightx + Leftx);
 	BARy = (1/3)*(Heady + Righty + Lefty);
 
+
+	ROS_INFO("(BarX, BarY): (%f, %f)", BARx, BARy);
+
 	//instructions à envoyer suivant les cas
 	if(BARx<0.5-epsilon)
 	{
-		drone->moveRight();
+		drone->moveLeft(0.05);
 	}
 	if(BARy<0.5-epsilon)
 	{
-		drone->moveDown();
+		drone->moveDown(0.05);
 	}
-	if(BARx<0.5+epsilon)
+	if(BARx>0.5+epsilon)
 	{
-		drone->moveLeft();
+		drone->moveRight(0.05);
 	}
-	if(BARy<0.5+epsilon)
+	if(BARy>0.5+epsilon)
 	{
-		drone->moveUp();
+		drone->moveUp(0.05);
 	}
 }
 
@@ -50,13 +53,13 @@ void Control::checkForEqualDistancesBetweenLeftAndRight() {
 
 	if(d1<d2)
 	{
-		drone->moveLeft();
-		drone->rotateRight();
+		drone->moveLeft(0.05);
+		drone->rotateRight(0.05);
 	}
 	if(d1>d2)
 	{
-		drone->moveRight();
-		drone->rotateLeft();
+		drone->moveRight(0.05);
+		drone->rotateLeft(0.05);
 	}
 
 }
@@ -65,16 +68,20 @@ void Control::controlOfDepth() {
 
 	if((d1+d2)<depthPosition-epsilon)
 	{
-		drone->moveForward();
+		drone->moveForward(0.05);
 	}
 	if((d1+d2)>depthPosition+epsilon)
 	{
-		drone->moveBackward();
+		drone->moveBackward(0.05);
 	}
 }
 
 void Control::callback(const robia::points_tuple &msg) {
 
+	if(msg.Hx == -1) {
+		drone->hover();
+		return;
+	}
 	//on reçoit le message du topic output_positions
 	Headx = msg.Hx;//à modifier suivant le nom des floats du message
 	Heady = msg.Hy;
@@ -86,6 +93,7 @@ void Control::callback(const robia::points_tuple &msg) {
 	//calcul des distances
 	d1 = Headx - Rightx;
 	d2 = Leftx - Headx;
+
 
 	centerWithRespectToBaryCenter();
 	checkForEqualDistancesBetweenLeftAndRight();

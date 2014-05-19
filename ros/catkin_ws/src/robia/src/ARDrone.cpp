@@ -135,5 +135,6 @@ void ARDrone::hover() {
 	cmd_msg.angular.x = 0.0;
 	cmd_msg.angular.y = 0.0;
 
+    ROS_INFO("Hover");
     this->pubMove.publish(cmd_msg);
 }
