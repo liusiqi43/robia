@@ -5,8 +5,8 @@
 #include "ARDrone.h"
 #include "camera.h"
 
-const double ARDrone::TWIST_LINEAR = 0.3;
-const double ARDrone::TWIST_ANGULAR = 0.3;
+const double ARDrone::TWIST_LINEAR = 0.1;
+const double ARDrone::TWIST_ANGULAR = 0.05;
 const int ARDrone::FRONT_CAM = 0;
 const int ARDrone::BOTTOM_CAM = 1;
 
@@ -109,11 +109,11 @@ void ARDrone::moveDown(double vel) {
 
 
 void ARDrone::rotateLeft() {
-    rotateLeft(TWIST_LINEAR);
+    rotateLeft(TWIST_ANGULAR);
 }
 
 void ARDrone::rotateRight() {
-    rotateRight(TWIST_LINEAR);
+    rotateRight(TWIST_ANGULAR);
 }
 
 void ARDrone::rotateLeft(double vel) {

@@ -17,7 +17,7 @@
 #define LengthOfCamera 320
 #define HeightOfCamera 240
 #define MIN_VALID_COMPONENT_DEVIATION 3
-
+#define MORPH_RADIUS 2
 
 AI::AI() : DESIRED_SAMPLE_SIZE(2000), 
 NB_EPOCHS_PER_FRAME(10), 
@@ -51,6 +51,10 @@ rng(12345)
 
  //make output video file  
  if (DEBUG) mOutVideo.open("../output.avi", CV_FOURCC('P','I','M','1'), 24, S, Color);  
+
+
+ morphoElement = cv::getStructuringElement( cv::MORPH_ELLIPSE, cv::Size( 2*MORPH_RADIUS + 1, 2*MORPH_RADIUS+1 ));
+  // morphoElement.setTo(cv::Scalar(1));
 }
 
 AI::~AI() {
@@ -72,28 +76,31 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
   }
 
   // Processing
-
-
-
   cv::Size imageSize =  cv_ptr->image.size();
-  dyeFilter->process(cv_ptr->image, cv_ptr->image, gngt_input);
+  cv::Mat erosionOut;
+  dyeFilter->process(cv_ptr->image, cv_ptr->image);
+  cv::erode(cv_ptr->image, erosionOut, morphoElement);
+  // imshow("erode", erosionOut);
+  cv::dilate(erosionOut, cv_ptr->image, morphoElement);
+  dyeFilter->fill(erosionOut, gngt_input);
 
   for(int e = 0; e < NB_EPOCHS_PER_FRAME; ++e) {
     std::random_shuffle(gngt_input.begin(),gngt_input.end()); // Important !!!!
     auto begin = gngt_input.begin();
-    int vecsize = gngt_input.size()-1;
+    int vecsize = gngt_input.size();
 
     int sampleSize = std::min(DESIRED_SAMPLE_SIZE, vecsize);
-    int nbSample = imageSize.height * imageSize.width * sampleSize / vecsize;
+
+    int nbSample = (vecsize != 0) ? imageSize.height * imageSize.width * sampleSize / vecsize : 0;
     params.setNbSamples(nbSample);
 
     auto end   = gngt_input.begin()+sampleSize; 
 
     vq2::algo::gngt::open_epoch(graph,evolution);
-    for(auto iter = begin; iter != end; ++iter)
-      vq2::algo::gngt::submit(params,graph,
-       unit_distance,unit_learn,
-       *iter,true);
+    for(auto iter = begin; iter != end; ++iter) {
+      vq2::algo::gngt::submit(params,graph, unit_distance,unit_learn, *iter, true);
+    }
+
     vq2::algo::gngt::close_epoch(params,graph,
      unit_learn,
      evolution,true);

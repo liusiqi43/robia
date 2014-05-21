@@ -24,6 +24,7 @@ namespace GR{
             DyeFilter(double ref, 
                     double tolerance=.3, 
                     unsigned char darkThreshold=50); 
-            void process( const cv::Mat& src, cv::Mat& output, std::vector<cv::Point2d>& points);
+            void process( const cv::Mat& src, cv::Mat& output);
+            void fill(const cv::Mat& src, std::vector<cv::Point2d>& points);
     };
 }

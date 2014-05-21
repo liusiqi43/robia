@@ -71,7 +71,7 @@ public:
 	};
 	typedef vq2::unit::Learn<Unit,Learn> UnitLearn;
 
-	#define TARGET      0.1
+	#define TARGET      0.01
 	class Params {
 
 	public:
@@ -238,6 +238,8 @@ private:
 	cv::RNG rng;
 
 	cv::VideoWriter mOutVideo;
+
+	cv::Mat morphoElement;
 
 	const bool DEBUG;
 

@@ -22,8 +22,8 @@ Control::~Control() {
 void Control::centerWithRespectToBaryCenter() {
 	//calcul des coordonnées du barycentre principal
 
-	BARx = (1/3)*(Headx + Rightx + Leftx);
-	BARy = (1/3)*(Heady + Righty + Lefty);
+	BARx = (1/3.)*(Headx + Rightx + Leftx);
+	BARy = (1/3.)*(Heady + Righty + Lefty);
 
 
 	ROS_INFO("(BarX, BarY): (%f, %f)", BARx, BARy);
@@ -31,19 +31,19 @@ void Control::centerWithRespectToBaryCenter() {
 	//instructions à envoyer suivant les cas
 	if(BARx<0.5-epsilon)
 	{
-		drone->moveLeft(0.05);
+		drone->moveLeft();
 	}
 	if(BARy<0.5-epsilon)
 	{
-		drone->moveDown(0.05);
+		drone->moveUp();
 	}
 	if(BARx>0.5+epsilon)
 	{
-		drone->moveRight(0.05);
+		drone->moveRight();
 	}
 	if(BARy>0.5+epsilon)
 	{
-		drone->moveUp(0.05);
+		drone->moveDown();
 	}
 }
 
@@ -51,15 +51,15 @@ void Control::checkForEqualDistancesBetweenLeftAndRight() {
 
 	//actions à effectuer
 
-	if(d1<d2)
-	{
-		drone->moveLeft(0.05);
-		drone->rotateRight(0.05);
-	}
 	if(d1>d2)
 	{
-		drone->moveRight(0.05);
-		drone->rotateLeft(0.05);
+		drone->moveLeft();
+		drone->rotateRight();
+	}
+	if(d1<d2)
+	{
+		drone->moveRight();
+		drone->rotateLeft();
 	}
 
 }
@@ -68,11 +68,11 @@ void Control::controlOfDepth() {
 
 	if((d1+d2)<depthPosition-epsilon)
 	{
-		drone->moveForward(0.05);
+		drone->moveForward();
 	}
 	if((d1+d2)>depthPosition+epsilon)
 	{
-		drone->moveBackward(0.05);
+		drone->moveBackward();
 	}
 }
 
@@ -97,7 +97,7 @@ void Control::callback(const robia::points_tuple &msg) {
 
 	centerWithRespectToBaryCenter();
 	checkForEqualDistancesBetweenLeftAndRight();
-	controlOfDepth();
+	 controlOfDepth();
 }
 
 
