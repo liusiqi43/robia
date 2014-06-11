@@ -39,14 +39,14 @@ namespace GR{
                     // Definir un point(x,y) 
                     // points.push_back(cv::Point2d(j, i));
                 } else {
-                    output.at<dye::cvBGR>(i,j) = false_value;
+                    output.at<dye::cvBGR>(i,j) = src.at<dye::cvBGR>(i,j)/2;
                 }
             }
         }
     }
 
     void DyeFilter::fill(const cv::Mat& src, std::vector<cv::Point2d>& points) {
-        dye::cvBGR false_value = dye::cvBGR(0,0,0);
+        dye::cvBGR true_value = this->params.getRef();
 
         points.clear();
 
@@ -56,7 +56,7 @@ namespace GR{
             {
                 dye::cvBGR bgr = src.at<dye::cvBGR>(i,j);
 
-                if (bgr != false_value) {
+                if (bgr == true_value) {
                     // Definir un point(x,y) 
                     points.push_back(cv::Point2d(j, i));
                 } 

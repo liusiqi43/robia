@@ -9,7 +9,9 @@
 
 class ARDrone : boost::noncopyable {
 public:
-	static const double TWIST_LINEAR;
+	static const double TWIST_TRANSLATION_LINEAR;
+	static const double TWIST_DEPTH_LINEAR;
+	static const double TWIST_HEIGHT_LINEAR;
 	static const double TWIST_ANGULAR;
 
 	static const int FRONT_CAM; 

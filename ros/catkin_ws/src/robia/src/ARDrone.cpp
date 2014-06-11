@@ -7,8 +7,10 @@
 
 #include <array>
 
-const double ARDrone::TWIST_LINEAR = 0.05;
-const double ARDrone::TWIST_ANGULAR = 0.05;
+const double ARDrone::TWIST_TRANSLATION_LINEAR = 0.02;
+const double ARDrone::TWIST_DEPTH_LINEAR = 0.04;
+const double ARDrone::TWIST_HEIGHT_LINEAR = 0.05;
+const double ARDrone::TWIST_ANGULAR = 0.15;
 const int ARDrone::FRONT_CAM = 0;
 const int ARDrone::BOTTOM_CAM = 1;
 
@@ -42,7 +44,7 @@ void ARDrone::reset() {
 }
 
 void ARDrone::setMoveForward() {
-	setMoveForward(TWIST_LINEAR);
+	setMoveForward(TWIST_DEPTH_LINEAR);
 }
 
 void ARDrone::setMoveForward(double vel) {
@@ -51,7 +53,7 @@ void ARDrone::setMoveForward(double vel) {
 }
 
 void ARDrone::setMoveBackward() {
-	setMoveBackward(TWIST_LINEAR);
+	setMoveBackward(TWIST_DEPTH_LINEAR);
 }
 
 void ARDrone::setMoveBackward(double vel) {
@@ -60,7 +62,7 @@ void ARDrone::setMoveBackward(double vel) {
 }
 
 void ARDrone::setMoveLeft() {
-    setMoveLeft(TWIST_LINEAR);      
+    setMoveLeft(TWIST_TRANSLATION_LINEAR);      
 }
 
 void ARDrone::setMoveLeft(double vel) {
@@ -69,7 +71,7 @@ void ARDrone::setMoveLeft(double vel) {
 }
 
 void ARDrone::setMoveRight() {
-    setMoveRight(TWIST_LINEAR);
+    setMoveRight(TWIST_TRANSLATION_LINEAR);
 }
 
 void ARDrone::setMoveRight(double vel) {
@@ -78,7 +80,7 @@ void ARDrone::setMoveRight(double vel) {
 }
 
 void ARDrone::setMoveUp() {
-    setMoveUp(TWIST_LINEAR);
+    setMoveUp(TWIST_HEIGHT_LINEAR);
 }
 
 void ARDrone::setMoveUp(double vel) {
@@ -87,7 +89,7 @@ void ARDrone::setMoveUp(double vel) {
 }
 
 void ARDrone::setMoveDown() {
-    setMoveDown(TWIST_LINEAR);
+    setMoveDown(TWIST_HEIGHT_LINEAR);
 }
 
 void ARDrone::setMoveDown(double vel) {

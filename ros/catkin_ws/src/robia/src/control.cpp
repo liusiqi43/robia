@@ -1,11 +1,12 @@
 #include <ros/ros.h>
 #include "control.h"
 
-
-#define epsilon 1e-1
-#define depth_epsilon 8e-3
+#define depth_control_activation_epsilon 1e-1 // 1e-1
 #define rotate_epsilon 1e-1
-#define depthPosition 0.3
+#define height_epsilon 1e-2
+#define depth_epsilon 1e-3
+#define translate_epsilon 1e-2
+#define depthPosition 3e-1
 
 
 Control::Control() : idleCount(0) {
@@ -51,14 +52,16 @@ void Control::centerWithRespectToBaryCenter() {
 	// ROS_INFO("abs: %f : epsilon : %f", std::abs(BARx - 0.5), epsilon);
 
  	// ROS_INFO("SET MOVELEFT: %f", tan((0.5 - BARx)/1.5));
-	if(BARx - 0.5 > epsilon) drone->setMoveRight(); // tan((0.5 - BARx)/1.5)
-	else if (BARx - 0.5 < -epsilon) drone->setMoveLeft();
-	else drone->setMoveLeft(0);
+	if(BARx - 0.5 > rotate_epsilon) 
+		drone->setRotateLeft();
+	else if (BARx - 0.5 < -rotate_epsilon) 
+		drone->setRotateRight();
+	else drone->setRotateRight(0);
 
 	// ROS_INFO("SET MOVEUP: %f", tan((0.5 - BARy)/1.5));
 	// tan((0.5 - BARy)/1.5)
-	if(BARy - 0.5 > epsilon) drone->setMoveDown();
-	else if (BARy - 0.5 < -epsilon) drone->setMoveUp();
+	if(BARy - 0.5 > height_epsilon) drone->setMoveDown();
+	else if (BARy - 0.5 < -height_epsilon) drone->setMoveUp();
 	else drone->setMoveUp(0);
 
 }
@@ -67,17 +70,15 @@ void Control::checkForEqualDistancesBetweenLeftAndRight() {
 
 	//actions à effectuer
 
-	if(d1/d2 > 1 + rotate_epsilon)
+	if(d1/(d1 + d2) > 0.5 + translate_epsilon)
 	{
 		drone->setMoveLeft();
-		drone->setRotateRight();
 	}
-	else if(d1/d2 < 1 - rotate_epsilon)
+	else if(d1/(d1 + d2) < 0.5 - translate_epsilon)
 	{
 		drone->setMoveRight();
-		drone->setRotateLeft();
 	} else {
-		drone->setRotateLeft(0);
+		drone->setMoveLeft(0);
 	}
 }
 
@@ -93,7 +94,7 @@ void Control::controlOfDepth() {
 	// }
 
 
-	if (abs(Headx - (Leftx + Rightx)/2) < epsilon)
+	if (abs(Headx - (Leftx + Rightx)/2) < depth_control_activation_epsilon)
 	{
 		if((d1+d2)>depthPosition+depth_epsilon)
 			drone->setMoveBackward();
@@ -123,7 +124,7 @@ void Control::callback(const robia::points_tuple &msg) {
 	//on reçoit le message du topic output_positions
 	Headx = msg.Hx;//à modifier suivant le nom des floats du message
 	Heady = msg.Hy;
-	Rightx = msg.Rx;
+	Rightx = msg.Rx; // Rx < Hx < Lx sur l'image
 	Righty = msg.Ry;
 	Leftx = msg.Lx;
 	Lefty = msg.Ly;
@@ -132,9 +133,10 @@ void Control::callback(const robia::points_tuple &msg) {
 	d1 = Headx - Rightx;
 	d2 = Leftx - Headx;
 
+	ROS_INFO("d1: %f, d2: %f", d1, d2);
 
 	centerWithRespectToBaryCenter();
-	// checkForEqualDistancesBetweenLeftAndRight();
+	checkForEqualDistancesBetweenLeftAndRight();
 	controlOfDepth();
 
 
