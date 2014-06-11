@@ -38,8 +38,6 @@ char nonBlockingGetCh() {
     ARDrone *drone = new ARDrone();
 
 
-    int idleCount = -1;
-
     //define different keyboard_commandes
     while (ros::ok())
     {
@@ -48,72 +46,54 @@ char nonBlockingGetCh() {
       switch(c) {
         case 't' : {
          drone->takeOff();
-         idleCount = 0;
          break;
        }
        case 'l' : {
          drone->land();
-         idleCount = -1; 
          break;
        }
        case 'r' : {
         drone->reset();
-        idleCount = -1; 
         break;
       }
-      case 'w' : {
-        drone->moveForward();
-        idleCount = 0; 
+      case 'z' : {
+        drone->setMoveForward();
         break;
       }
       case 's' : {
-        drone->moveBackward();
-        idleCount = 0; 
-        break;
-      }
-      case 'a' : {
-        drone->moveLeft();
-        idleCount = 0; 
-        break;
-      }
-      case 'd' : {
-        drone->moveRight();
-        idleCount = 0; 
-        break;
-      }
-      case 'u' : {
-        drone->moveUp();
-        idleCount = 0; 
-        break;
-      }
-      case 'j' : {
-        drone->moveDown();
-        idleCount = 0; 
-        break;
-      }
-      case 'e' : {
-        drone->rotateRight();
-        idleCount = 0; 
+        drone->setMoveBackward();
         break;
       }
       case 'q' : {
-        drone->rotateLeft();
-        idleCount = 0; 
+        drone->setMoveLeft();
         break;
       }
-      //case defaut
-      case -1: {
-        if (idleCount >= 0) {
-          ++idleCount;
-        }
-        // we count 1sec and we do one hover
-        // we wait for next action and count for next hover
-        if (idleCount >= FREQ/2){
-          drone->hover();
-          idleCount = -1; 
-        }
+      case 'd' : {
+        drone->setMoveRight();
+        break;
       }
+      case 'u' : {
+        drone->setMoveUp();
+        break;
+      }
+      case 'h' : {
+        drone->hover();
+        break;
+      }
+      case 'j' : {
+        drone->setMoveDown();
+        break;
+      }
+      case 'e' : {
+        drone->setRotateRight();
+        break;
+      }
+      case 'a' :
+        drone->setRotateLeft();
+        break;
     }
+
+    drone->commit();
 
     ros::spinOnce();
     //fait attendre pour voir une frequence de 100

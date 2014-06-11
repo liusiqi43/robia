@@ -2,6 +2,7 @@
 #define ARDRONE_H__
 
 #include <boost/utility.hpp>
+#include <geometry_msgs/Twist.h>
 #include "ros/ros.h"
 #include "std_msgs/Empty.h"
 #include "camera.h"
@@ -20,27 +21,29 @@ public:
 	void land();
 	void reset();
 
-	void moveForward();
-	void moveBackward();
-	void moveLeft();
-	void moveRight();
-	void moveUp();
-	void moveDown();
+	void setMoveForward();
+	void setMoveBackward();
+	void setMoveLeft();
+	void setMoveRight();
+	void setMoveUp();
+	void setMoveDown();
 
-	void moveForward(double vel);
-	void moveBackward(double vel);
-	void moveLeft(double vel);
-	void moveRight(double vel);
-	void moveUp(double vel);
-	void moveDown(double vel);
+	void setMoveForward(double vel);
+	void setMoveBackward(double vel);
+	void setMoveLeft(double vel);
+	void setMoveRight(double vel);
+	void setMoveUp(double vel);
+	void setMoveDown(double vel);
 
 	void hover();
 
-	void rotateLeft(double vel);
-	void rotateRight(double vel);
+	void setRotateLeft(double vel);
+	void setRotateRight(double vel);
 	
-	void rotateLeft();
-	void rotateRight();
+	void setRotateLeft();
+	void setRotateRight();
+
+	void commit();
 
 private:
 	//NodeHandle qui identifie le Node
@@ -51,7 +54,10 @@ private:
 	ros::Publisher pubReset;
 	ros::Publisher pubMove;
 
+	geometry_msgs::Twist cmd_msg;
+
 	Camera *front_cam;
+	bool needCommit;
 };
 
 #endif /* end of include guard: ARDRONE_H__ */

@@ -167,7 +167,6 @@ void AI::imageCallBack(const sensor_msgs::ImageConstPtr& msg) {
     } 
 
     //if (DEBUG) ROS_INFO("Label %d, Deviation %f", (*iter).first, vertexLooper.getDeviation());
-
   }
 
   // Processing ends here

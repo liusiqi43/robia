@@ -111,6 +111,9 @@ include_directories(${Boost_INCLUDE_DIRS})
 
 ## Declare a cpp executable
 add_executable(keyboard_cmd src/keyboard_cmd.cpp src/ARDrone.cpp src/camera.cpp)
+set_target_properties(keyboard_cmd PROPERTIES 
+  COMPILE_FLAGS "-std=c++0x"
+)
 target_link_libraries(keyboard_cmd ${catkin_LIBRARIES})
 
 
