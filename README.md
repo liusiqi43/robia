@@ -52,3 +52,6 @@ This assumes that you are connected to the ParrotAR drone via wifi successfully.
 
 ## Demo
 A video demo of our first attemps is available [here](https://www.youtube.com/watch?v=uqZO2VXokQA). 
+
+## Documents
+Related documents are available in doc/, including slides and report both in French. 
