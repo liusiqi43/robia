@@ -1,6 +1,9 @@
-# Gesture control for drone with simple webcam 
+# Gesture control for drone with onboard camera 
 -----------
-## Architecture
+
+a gesture control project for Parrot's ARDrone developed by first-year students at Supélec, MALIS Lab.
+
+## Overall Architecture
 
 ![image](doc/robia_structure.png)
 
